@@ -494,37 +494,104 @@ tailwind.config = {
 <!-- ═══════════════════════════════════════════ -->
 <!-- PLAT DU JOUR                                -->
 <!-- ═══════════════════════════════════════════ -->
-<section class="py-20 px-8 md:px-20 bg-background border-b border-outline-variant/10" id="platdujour">
-  <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-10 reveal">
-    <div class="flex items-center gap-8">
-      <div class="text-center">
-        <div class="font-label-caps text-[10px] tracking-widest text-on-surface/40 mb-2">AUJOURD'HUI</div>
-        <div class="text-secondary font-display text-5xl md:text-6xl italic" id="pdj-day">—</div>
-        <div class="font-label-caps text-[10px] tracking-widest text-on-surface/40 mt-2" id="pdj-date">—</div>
+<!-- PLAT DU JOUR SECTION -->
+<section id="platdujour" style="
+  position:relative;
+  background:#06060A;
+  overflow:hidden;
+  padding:0;
+  border-top:1px solid rgba(233,195,73,.12);
+  border-bottom:1px solid rgba(233,195,73,.12);
+">
+  <!-- ambient glow -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(233,195,73,.06) 0%,transparent 70%);pointer-events:none"></div>
+
+  <!-- gold top line animated -->
+  <div id="pdj-line" style="position:absolute;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,transparent,#E9C349,transparent);transition:width 1.6s cubic-bezier(.4,0,.2,1)"></div>
+  <div id="pdj-line-b" style="position:absolute;bottom:0;right:0;height:2px;width:0;background:linear-gradient(270deg,transparent,#E9C349,transparent);transition:width 1.6s cubic-bezier(.4,0,.2,1)"></div>
+
+  <div style="max-width:1440px;margin:0 auto;padding:56px 48px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:48px" class="pdj-grid">
+
+    <!-- LEFT: vertical label + date -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
+      <div style="writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Courier New',monospace;font-size:9px;letter-spacing:.3em;color:rgba(233,195,73,.5);text-transform:uppercase;user-select:none">
+        PLAT&nbsp;DU&nbsp;JOUR
       </div>
-      <div class="w-px h-20 bg-secondary/30 hidden md:block"></div>
-    </div>
-    <div class="flex-1 text-center md:text-left">
-      <div class="font-label-caps text-[10px] tracking-widest text-secondary/60 mb-3">PLAT DU JOUR</div>
-      <div id="pdj-name-ar" class="font-display text-3xl md:text-4xl text-on-surface mb-2" dir="rtl" style="font-style:italic">—</div>
-      <div id="pdj-name-fr" class="font-label-caps text-[11px] tracking-widest text-on-surface/40">—</div>
-    </div>
-    <div class="hidden md:flex items-center">
-      <div class="relative w-24 h-24 flex items-center justify-center">
-        <div class="absolute inset-0 rounded-full border border-secondary/20 animate-ping" style="animation-duration:3s"></div>
-        <div class="w-16 h-16 rounded-full border border-secondary/40 flex items-center justify-center">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E9C349" stroke-width="1.2">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
-            <path d="M12 6v6l4 2"/>
-          </svg>
-        </div>
+      <div style="width:1px;height:60px;background:linear-gradient(to bottom,rgba(233,195,73,.4),transparent)"></div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <span id="pdj-dot" style="width:7px;height:7px;border-radius:50%;background:#E9C349;display:block;box-shadow:0 0 8px #E9C349;animation:pdj-pulse 2s ease-in-out infinite"></span>
+        <span style="font-size:8px;letter-spacing:.2em;color:rgba(233,195,73,.6);text-transform:uppercase;font-family:'Courier New',monospace">LIVE</span>
       </div>
     </div>
+
+    <!-- CENTER: main content -->
+    <div style="text-align:center">
+      <div style="font-size:9px;letter-spacing:.35em;color:rgba(245,240,232,.3);text-transform:uppercase;font-family:'Courier New',monospace;margin-bottom:12px" id="pdj-date">—</div>
+
+      <div id="pdj-name-ar"
+        dir="rtl"
+        style="
+          font-family:Georgia,'Times New Roman',serif;
+          font-size:clamp(2.8rem,6vw,5.5rem);
+          font-style:italic;
+          color:#F5F0E8;
+          line-height:1.1;
+          letter-spacing:.02em;
+          opacity:0;
+          transform:translateY(18px);
+          transition:opacity .9s ease, transform .9s ease;
+          margin-bottom:20px;
+        ">—</div>
+
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:14px">
+        <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(to right,transparent,rgba(233,195,73,.4))"></div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#E9C349" opacity=".6"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+        <div style="flex:1;max-width:80px;height:1px;background:linear-gradient(to left,transparent,rgba(233,195,73,.4))"></div>
+      </div>
+
+      <div id="pdj-name-fr"
+        style="
+          font-size:9px;
+          letter-spacing:.28em;
+          color:rgba(233,195,73,.55);
+          text-transform:uppercase;
+          font-family:'Courier New',monospace;
+          opacity:0;
+          transition:opacity .9s ease .3s;
+        ">—</div>
+    </div>
+
+    <!-- RIGHT: day display -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
+      <div id="pdj-day"
+        style="
+          font-family:Georgia,'Times New Roman',serif;
+          font-size:clamp(2rem,4vw,3.5rem);
+          font-style:italic;
+          color:rgba(233,195,73,.85);
+          line-height:1;
+          text-align:center;
+        ">—</div>
+      <div style="width:1px;height:60px;background:linear-gradient(to bottom,rgba(233,195,73,.4),transparent)"></div>
+      <div style="writing-mode:vertical-rl;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.3em;color:rgba(245,240,232,.2);text-transform:uppercase;user-select:none">
+        AUJOURD'HUI
+      </div>
+    </div>
+
   </div>
-  <div id="pdj-fallback" class="text-center py-4 font-label-caps text-[10px] text-on-surface/20" style="display:none">
-    Plat du jour non configuré
+
+  <div id="pdj-fallback" style="display:none;text-align:center;padding:16px;font-size:9px;letter-spacing:.2em;color:rgba(245,240,232,.15);font-family:'Courier New',monospace">
+    PLAT DU JOUR NON CONFIGURÉ
   </div>
 </section>
+
+<style>
+@keyframes pdj-pulse{0%,100%{opacity:1;box-shadow:0 0 6px #E9C349}50%{opacity:.4;box-shadow:0 0 2px #E9C349}}
+@media(max-width:640px){
+  .pdj-grid{grid-template-columns:1fr !important;padding:40px 24px !important;text-align:center}
+  #pdj-day{font-size:2.2rem !important}
+}
+</style>
 
 <!-- ═══════════════════════════════════════════ -->
 <!-- FULL MENU / THE COLLECTION                  -->
@@ -1726,11 +1793,26 @@ document.head.appendChild(style);
 <script>
 // ── PLAT DU JOUR ───────────────────────────────
 (async function initPlatDuJour(){
-  const days = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
-  const months = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
-  const now = new Date();
+  const days   = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const now    = new Date();
   document.getElementById('pdj-day').textContent  = days[now.getDay()];
   document.getElementById('pdj-date').textContent = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+
+  // trigger line animations after a short delay
+  setTimeout(()=>{
+    const l = document.getElementById('pdj-line');
+    const lb= document.getElementById('pdj-line-b');
+    if(l)  l.style.width  = '100%';
+    if(lb) lb.style.width = '100%';
+  }, 300);
+
+  function revealDish(){
+    const ar = document.getElementById('pdj-name-ar');
+    const fr = document.getElementById('pdj-name-fr');
+    if(ar){ ar.style.opacity='1'; ar.style.transform='translateY(0)'; }
+    if(fr){ fr.style.opacity='1'; }
+  }
 
   if(typeof JSONBIN_BIN_ID === 'undefined' || JSONBIN_BIN_ID === 'YOUR_BIN_ID_HERE'){
     document.getElementById('pdj-fallback').style.display = 'block';
@@ -1745,6 +1827,7 @@ document.head.appendChild(style);
     if(dish){
       document.getElementById('pdj-name-ar').textContent = dish.name_ar;
       document.getElementById('pdj-name-fr').textContent = dish.name_fr;
+      setTimeout(revealDish, 500);
     } else {
       document.getElementById('pdj-fallback').style.display = 'block';
     }
