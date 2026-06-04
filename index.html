@@ -515,7 +515,7 @@ tailwind.config = {
     <!-- LEFT: vertical label + date -->
     <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
       <div style="writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Courier New',monospace;font-size:9px;letter-spacing:.3em;color:rgba(233,195,73,.5);text-transform:uppercase;user-select:none">
-        PLAT&nbsp;DU&nbsp;JOUR
+        طبق&nbsp;اليوم
       </div>
       <div style="width:1px;height:60px;background:linear-gradient(to bottom,rgba(233,195,73,.4),transparent)"></div>
       <div style="display:flex;align-items:center;gap:6px">
@@ -526,6 +526,18 @@ tailwind.config = {
 
     <!-- CENTER: main content -->
     <div style="text-align:center">
+
+      <!-- Title -->
+      <div style="margin-bottom:18px">
+        <div style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(.85rem,1.8vw,1.2rem);font-style:italic;color:rgba(233,195,73,.9);letter-spacing:.05em;line-height:1.3">
+          طبق اليوم
+        </div>
+        <div style="font-family:'Courier New',monospace;font-size:8px;letter-spacing:.35em;color:rgba(233,195,73,.45);text-transform:uppercase;margin-top:3px">
+          PLAT DU JOUR
+        </div>
+        <div style="width:40px;height:1px;background:rgba(233,195,73,.3);margin:10px auto 0"></div>
+      </div>
+
       <div style="font-size:9px;letter-spacing:.35em;color:rgba(245,240,232,.3);text-transform:uppercase;font-family:'Courier New',monospace;margin-bottom:12px" id="pdj-date">—</div>
 
       <div id="pdj-name-ar"
@@ -561,20 +573,32 @@ tailwind.config = {
         ">—</div>
     </div>
 
-    <!-- RIGHT: day display -->
+    <!-- RIGHT: countdown -->
     <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
-      <div id="pdj-day"
+      <div style="font-family:'Courier New',monospace;font-size:8px;letter-spacing:.25em;color:rgba(233,195,73,.5);text-transform:uppercase;margin-bottom:4px">يتغير بعد</div>
+      <div id="pdj-countdown"
         style="
-          font-family:Georgia,'Times New Roman',serif;
-          font-size:clamp(2rem,4vw,3.5rem);
-          font-style:italic;
-          color:rgba(233,195,73,.85);
+          font-family:'Courier New',monospace;
+          font-size:clamp(1.4rem,3vw,2rem);
+          color:rgba(233,195,73,.9);
+          letter-spacing:.1em;
           line-height:1;
-          text-align:center;
-        ">—</div>
-      <div style="width:1px;height:60px;background:linear-gradient(to bottom,rgba(233,195,73,.4),transparent)"></div>
+          text-shadow:0 0 18px rgba(233,195,73,.3);
+        ">00:00:00</div>
+      <div style="display:flex;gap:12px;margin-top:2px">
+        <div style="text-align:center">
+          <div style="font-family:'Courier New',monospace;font-size:7px;letter-spacing:.2em;color:rgba(245,240,232,.2);text-transform:uppercase">س</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-family:'Courier New',monospace;font-size:7px;letter-spacing:.2em;color:rgba(245,240,232,.2);text-transform:uppercase">د</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-family:'Courier New',monospace;font-size:7px;letter-spacing:.2em;color:rgba(245,240,232,.2);text-transform:uppercase">ث</div>
+        </div>
+      </div>
+      <div style="width:1px;height:40px;background:linear-gradient(to bottom,rgba(233,195,73,.4),transparent)"></div>
       <div style="writing-mode:vertical-rl;font-family:'Courier New',monospace;font-size:9px;letter-spacing:.3em;color:rgba(245,240,232,.2);text-transform:uppercase;user-select:none">
-        AUJOURD'HUI
+        COUNTDOWN
       </div>
     </div>
 
@@ -589,7 +613,7 @@ tailwind.config = {
 @keyframes pdj-pulse{0%,100%{opacity:1;box-shadow:0 0 6px #E9C349}50%{opacity:.4;box-shadow:0 0 2px #E9C349}}
 @media(max-width:640px){
   .pdj-grid{grid-template-columns:1fr !important;padding:40px 24px !important;text-align:center}
-  #pdj-day{font-size:2.2rem !important}
+  #pdj-countdown{font-size:1.5rem !important}
 }
 </style>
 
@@ -1793,11 +1817,25 @@ document.head.appendChild(style);
 <script>
 // ── PLAT DU JOUR ───────────────────────────────
 (async function initPlatDuJour(){
-  const days   = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
   const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
   const now    = new Date();
-  document.getElementById('pdj-day').textContent  = days[now.getDay()];
   document.getElementById('pdj-date').textContent = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
+
+  // ── Countdown to midnight ──
+  function updateCountdown(){
+    const n = new Date();
+    const midnight = new Date(n.getFullYear(), n.getMonth(), n.getDate()+1, 0, 0, 0);
+    let diff = Math.floor((midnight - n) / 1000);
+    const h = Math.floor(diff / 3600);
+    diff -= h * 3600;
+    const m = Math.floor(diff / 60);
+    const s = diff - m * 60;
+    const pad = v => String(v).padStart(2,'0');
+    const el = document.getElementById('pdj-countdown');
+    if(el) el.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 
   // trigger line animations after a short delay
   setTimeout(()=>{
