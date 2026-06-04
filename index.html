@@ -356,7 +356,7 @@ tailwind.config = {
 
 <!-- PRELOADER -->
 <div id="preloader">
-  <video id="preloader-video" autoplay muted loop playsinline preload="auto">
+  <video id="preloader-video" autoplay muted playsinline preload="auto">
     <source src="https://res.cloudinary.com/dlazeylfu/video/upload/vc_h264/0604_rtyjn0.mp4" type="video/mp4"/>
   </video>
   <div class="preloader-overlay"></div>
@@ -1378,22 +1378,17 @@ document.body.classList.add('no-scroll');
     preloader.classList.add('hidden');
     document.body.classList.remove('no-scroll');
   }
-  function startCountdown(duration){
-    setTimeout(hidePreloader, duration);
-  }
   if(vid){
-    vid.addEventListener('playing', function onPlaying(){
-      vid.removeEventListener('playing', onPlaying);
-      startCountdown(3500);
-    });
-    vid.addEventListener('error', function(){
-      startCountdown(1800);
-    });
-    // fallback if video never fires playing
-    setTimeout(hidePreloader, 6000);
-    vid.play().catch(function(){ startCountdown(1800); });
+    // Hide after video ends naturally
+    vid.addEventListener('ended', hidePreloader);
+    // On error or can't play: hide after 2s
+    vid.addEventListener('error', function(){ setTimeout(hidePreloader, 2000); });
+    // Hard fallback: max 20s in case video is very long or stalls
+    var fallback = setTimeout(hidePreloader, 20000);
+    vid.addEventListener('ended', function(){ clearTimeout(fallback); });
+    vid.play().catch(function(){ setTimeout(hidePreloader, 2000); });
   } else {
-    window.addEventListener('load', function(){ startCountdown(1800); });
+    setTimeout(hidePreloader, 2000);
   }
 })();
 
