@@ -636,6 +636,7 @@ tailwind.config = {
       <button class="menu-tab" onclick="switchTab('fumees')">VIANDES FUMÉES</button>
       <button class="menu-tab" onclick="switchTab('froide')">ENTRÉE FROIDE</button>
       <button class="menu-tab" onclick="switchTab('poissons')">POISSONS</button>
+      <button class="menu-tab" onclick="switchTab('boissons')">BOISSONS</button>
     </div>
 
     <!-- GRILLADES PANEL -->
@@ -928,6 +929,84 @@ tailwind.config = {
           <div class="flex items-center gap-3 flex-shrink-0">
             <span class="text-secondary font-display text-lg">600 <sup class="text-xs font-body">DA</sup></span>
             <button class="add-btn" onclick="addToCart('Salade variée G.M', 600)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOISSONS PANEL -->
+    <div class="menu-panel grid-cols-1 md:grid-cols-2 gap-x-16" id="panel-boissons">
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20">مشروبات — BOISSONS</div>
+
+        <!-- Farha -->
+        <div class="menu-item-card reveal">
+          <div>
+            <h5 class="text-lg font-display">Farha <span class="text-sm text-on-surface/40 font-body">— فرحة</span></h5>
+            <p class="text-xs text-on-surface/40 mt-1">33cl</p>
+          </div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">50 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Farha 33cl', 50)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div>
+            <h5 class="text-lg font-display">Farha <span class="text-sm text-on-surface/40 font-body">— فرحة</span></h5>
+            <p class="text-xs text-on-surface/40 mt-1">1L</p>
+          </div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">100 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Farha 1L', 100)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+
+        <!-- Hamoud -->
+        <div class="menu-item-card reveal">
+          <div>
+            <h5 class="text-lg font-display">Hamoud <span class="text-sm text-on-surface/40 font-body">— حمود</span></h5>
+            <p class="text-xs text-on-surface/40 mt-1">33cl</p>
+          </div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">60 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Hamoud 33cl', 60)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div>
+            <h5 class="text-lg font-display">Hamoud <span class="text-sm text-on-surface/40 font-body">— حمود</span></h5>
+            <p class="text-xs text-on-surface/40 mt-1">1L</p>
+          </div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">120 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Hamoud 1L', 120)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20">عصائر & مشروبات غازية</div>
+
+        <!-- Jus -->
+        <div class="menu-item-card reveal">
+          <div>
+            <h5 class="text-lg font-display">Jus <span class="text-sm text-on-surface/40 font-body">— عصير</span></h5>
+            <p class="text-xs text-on-surface/40 mt-1">33cl</p>
+          </div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">70 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Jus 33cl', 70)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+
+        <!-- Coca-Cola -->
+        <div class="menu-item-card reveal">
+          <div>
+            <h5 class="text-lg font-display">Coca-Cola <span class="text-sm text-on-surface/40 font-body">— كوكا كولا</span></h5>
+          </div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">150 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Coca-Cola', 150)"><span class="material-symbols-outlined mat-icon">add</span></button>
           </div>
         </div>
       </div>
