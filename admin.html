@@ -161,6 +161,12 @@ body::before{
 }
 .save-btn:hover:not(:disabled){opacity:.85;transform:translateY(-1px)}
 .save-btn:disabled{opacity:.3;cursor:not-allowed}
+.clear-btn{
+  background:transparent;color:#c0514a;border:1px solid rgba(192,81,74,.4);
+  padding:15px 24px;font-size:8px;letter-spacing:.25em;text-transform:uppercase;
+  font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.clear-btn:hover{background:rgba(192,81,74,.12);border-color:rgba(192,81,74,.7)}
 .status-msg{font-size:8px;letter-spacing:.18em;text-transform:uppercase;min-height:16px;transition:color .3s}
 .status-msg.ok{color:#5bab6a}
 .status-msg.err{color:#c0514a}
@@ -236,9 +242,14 @@ body::before{
         <div class="selected-preview" id="selectedPreview">Aucun plat sélectionné</div>
         <div class="status-msg" id="statusMsg"></div>
       </div>
-      <button class="save-btn" id="saveBtn" onclick="savePlat()" disabled>
-        ENREGISTRER LE PLAT DU JOUR
-      </button>
+      <div style="display:flex;gap:12px;align-items:center">
+        <button class="clear-btn" id="clearBtn" onclick="clearPlat()">
+          ✕ &nbsp;يوم بدون طبق
+        </button>
+        <button class="save-btn" id="saveBtn" onclick="savePlat()" disabled>
+          ENREGISTRER LE PLAT DU JOUR
+        </button>
+      </div>
     </div>
 
   </div>
@@ -375,6 +386,35 @@ async function savePlat(){
   }
   btn.disabled = false;
   btn.textContent = 'ENREGISTRER LE PLAT DU JOUR';
+}
+
+async function clearPlat(){
+  if(!confirm('تأكيد: سيتم إزالة طبق اليوم. المتابعة؟')) return;
+  const btn = document.getElementById('clearBtn');
+  btn.disabled = true;
+  btn.textContent = '…';
+  try{
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY},
+      body: JSON.stringify({dish: null})
+    });
+    if(r.ok){
+      document.getElementById('currentPill').style.display = 'none';
+      document.getElementById('currentName').textContent = '—';
+      document.querySelectorAll('.dish-card').forEach(c=>c.classList.remove('active'));
+      selectedId = null;
+      document.getElementById('saveBtn').disabled = true;
+      document.getElementById('selectedPreview').textContent = 'Aucun plat sélectionné';
+      setStatus('✓ Plat du jour supprimé — jour sans plat', 'ok');
+    } else {
+      setStatus('Erreur lors de la suppression', 'err');
+    }
+  } catch(e){
+    setStatus('Erreur réseau', 'err');
+  }
+  btn.disabled = false;
+  btn.textContent = '✕ \u00a0يوم بدون طبق';
 }
 
 function setStatus(msg, type){
