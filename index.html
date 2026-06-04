@@ -220,11 +220,12 @@ tailwind.config = {
   .form-input:focus{border-bottom-color:#e9c349;background:#1e2020 !important;-webkit-box-shadow:0 0 0 1000px #1e2020 inset !important;}
   .form-input::placeholder{color:rgba(226,226,226,.3);}
   .form-select{
-    width:100%;background:#1e2020;border:0;border-bottom:1px solid #5c403d;
-    padding:16px 0;color:#e2e2e2;font-size:17px;font-family:'Manrope',sans-serif;
-    transition:border-color .3s;outline:none;-webkit-appearance:none;cursor:pointer;
+    width:100%;background:#1a1c1c !important;border:0;border-bottom:1px solid #5c403d;
+    padding:14px 12px;color:#e2e2e2 !important;font-size:17px;font-family:'Manrope',sans-serif;
+    transition:border-color .3s;outline:none;-webkit-appearance:none;appearance:none;cursor:pointer;border-radius:2px;
   }
-  .form-select:focus{border-bottom-color:#e9c349;}
+  .form-select:focus{border-bottom-color:#e9c349;background:#1e2020 !important;}
+  .form-select option{background:#1a1c1c;color:#e2e2e2;}
 
   /* ── TESTIMONIAL CARD ── */
   .testimonial-card{
