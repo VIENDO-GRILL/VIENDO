@@ -312,8 +312,9 @@ function initPanel(){
 async function loadCurrentPlat(){
   if(typeof JSONBIN_BIN_ID === 'undefined' || JSONBIN_BIN_ID === 'YOUR_BIN_ID_HERE') return;
   try{
-    const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`,{
-      headers:{'X-Master-Key': JSONBIN_API_KEY}
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest?t=${Date.now()}`,{
+      headers:{'X-Master-Key': JSONBIN_API_KEY},
+      cache: 'no-store'
     });
     const j = await r.json();
     const dish = j.record?.dish;
