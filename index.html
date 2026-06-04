@@ -1368,13 +1368,32 @@ tailwind.config = {
 
 <script>
 // ── PRELOADER ──────────────────────────────────────
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('preloader').classList.add('hidden');
-    document.body.classList.remove('no-scroll');
-  }, 1800);
-});
 document.body.classList.add('no-scroll');
+(function(){
+  const preloader = document.getElementById('preloader');
+  const vid = document.getElementById('preloader-video');
+  function hidePreloader(){
+    preloader.classList.add('hidden');
+    document.body.classList.remove('no-scroll');
+  }
+  function startCountdown(duration){
+    setTimeout(hidePreloader, duration);
+  }
+  if(vid){
+    vid.addEventListener('playing', function onPlaying(){
+      vid.removeEventListener('playing', onPlaying);
+      startCountdown(3500);
+    });
+    vid.addEventListener('error', function(){
+      startCountdown(1800);
+    });
+    // fallback if video never fires playing
+    setTimeout(hidePreloader, 6000);
+    vid.play().catch(function(){ startCountdown(1800); });
+  } else {
+    window.addEventListener('load', function(){ startCountdown(1800); });
+  }
+})();
 
 // ── CURSOR GLOW ────────────────────────────────────
 const cursorGlow = document.getElementById('cursorGlow');
