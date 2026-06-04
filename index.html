@@ -436,7 +436,7 @@ tailwind.config = {
 <!-- ═══════════════════════════════════════════ -->
 <section class="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden" id="hero">
   <div class="absolute inset-0 z-0">
-    <video id="heroImg" autoplay muted loop playsinline
+    <video id="heroImg" muted loop playsinline
       class="w-full h-full object-cover brightness-[0.45] scale-110">
       <source src="https://res.cloudinary.com/dlazeylfu/video/upload/AQO0kGcpAPKO5HcF8DEl0y34uv_31xYE4_xHdczyGf3__zRljeHi1AbPYj5GBW1riLg_c0FDSy1hJf_czVBKKNBmQfcb01B2NEYEqns_zweoye.mp4" type="video/mp4"/>
     </video>
@@ -1379,14 +1379,25 @@ document.body.classList.add('no-scroll');
     document.body.classList.remove('no-scroll');
   }
   if(vid){
-    // Hide after video ends naturally
-    vid.addEventListener('ended', hidePreloader);
-    // On error or can't play: hide after 2s
-    vid.addEventListener('error', function(){ setTimeout(hidePreloader, 2000); });
-    // Hard fallback: max 20s in case video is very long or stalls
-    var fallback = setTimeout(hidePreloader, 20000);
-    vid.addEventListener('ended', function(){ clearTimeout(fallback); });
-    vid.play().catch(function(){ setTimeout(hidePreloader, 2000); });
+    function onVideoEnd(){
+      hidePreloader();
+      clearTimeout(fallback);
+      var heroVid = document.getElementById('heroImg');
+      if(heroVid){ heroVid.play().catch(function(){}); }
+    }
+    vid.addEventListener('ended', onVideoEnd);
+    vid.addEventListener('error', function(){ hidePreloader(); });
+    // Hard fallback: max 20s
+    var fallback = setTimeout(function(){
+      hidePreloader();
+      var heroVid = document.getElementById('heroImg');
+      if(heroVid){ heroVid.play().catch(function(){}); }
+    }, 20000);
+    vid.play().catch(function(){
+      hidePreloader();
+      var heroVid = document.getElementById('heroImg');
+      if(heroVid){ heroVid.play().catch(function(){}); }
+    });
   } else {
     setTimeout(hidePreloader, 2000);
   }
