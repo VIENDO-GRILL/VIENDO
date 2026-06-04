@@ -409,15 +409,15 @@ tailwind.config = {
       <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})" class="bg-primary-container text-white px-8 py-3 font-label-caps text-[11px] tracking-[.3em] hover:bg-red-700 transition-all duration-500 shadow-xl">
         EXPÉRIENCE
       </button>
-      <button onclick="openCart()" class="relative flex items-center justify-center transition-colors text-on-surface" style="width:70px;height:70px;">
+      <button onclick="openCart()" class="relative flex items-center justify-center transition-colors text-on-surface" style="width:130px;height:130px;">
         <img id="cartIconDesktop" src="cart-empty.png" alt="Panier" style="width:130px;height:130px;object-fit:contain;transition:all 0.3s;filter:drop-shadow(0 0 8px rgba(233,195,73,0.4));"/>
-        <span id="cartBadge">0</span>
+        <span id="cartBadge" style="top:8px;right:8px;">0</span>
       </button>
     </div>
     <div class="md:hidden flex items-center gap-4">
       <button onclick="openCart()" class="relative flex items-center justify-center text-on-surface" style="width:110px;height:110px;">
         <img id="cartIconMobile" src="cart-empty.png" alt="Panier" style="width:110px;height:110px;object-fit:contain;transition:all 0.3s;filter:drop-shadow(0 0 8px rgba(233,195,73,0.4));"/>
-        <span id="cartBadgeMob" class="absolute top-0 right-0 bg-primary-container text-white rounded-full w-5 h-5 text-[10px] font-bold flex items-center justify-center opacity-0 scale-0 transition-all duration-300">0</span>
+        <span id="cartBadgeMob" class="absolute bg-primary-container text-white rounded-full w-6 h-6 text-[11px] font-bold flex items-center justify-center opacity-0 scale-0 transition-all duration-300" style="top:6px;right:6px;">0</span>
       </button>
       <button onclick="openMobileNav()" class="text-on-surface hover:text-secondary transition-colors">
         <span class="material-symbols-outlined text-3xl">menu</span>
