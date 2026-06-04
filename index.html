@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<title>VIENDO GRILL | Excellence Gastronomique</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Manrope:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "background": "#0c0f0f",
+        "primary": "#ffb3ad",
+        "primary-container": "#c1121f",
+        "on-primary-container": "#ffd2ce",
+        "secondary": "#e9c349",
+        "on-secondary": "#3c2f00",
+        "surface": "#121414",
+        "surface-container": "#1e2020",
+        "surface-container-high": "#282a2b",
+        "surface-container-lowest": "#0c0f0f",
+        "on-surface": "#e2e2e2",
+        "on-surface-variant": "#e5bdb9",
+        "outline-variant": "#5c403d",
+        "outline": "#ac8885"
+      },
+      fontFamily: {
+        "body": ["Manrope", "sans-serif"],
+        "display": ["Playfair Display", "serif"]
+      },
+      fontSize: {
+        "display-lg": ["clamp(3.5rem, 8vw, 6rem)", {lineHeight:"1.1", letterSpacing:"-0.02em", fontWeight:"900"}],
+        "headline-lg": ["clamp(2rem, 4vw, 3.5rem)", {lineHeight:"1.2", fontWeight:"700"}],
+        "label-caps": ["12px", {lineHeight:"16px", letterSpacing:"0.3em", fontWeight:"700"}]
+      }
+    }
+  }
+}
+</script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background-color:#0c0f0f;
+    color:#e2e2e2;
+    overflow-x:hidden;
+    font-family:'Manrope',sans-serif;
+  }
+  body.no-scroll{overflow:hidden;}
+
+  /* ── PRELOADER ── */
+  #preloader{
+    position:fixed;inset:0;z-index:9999;
+    background:#0c0f0f;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    transition:opacity .8s ease, visibility .8s ease;
+  }
+  #preloader.hidden{opacity:0;visibility:hidden;}
+  .preloader-logo{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2rem,5vw,3.5rem);
+    letter-spacing:.4em;
+    color:#e2e2e2;
+    overflow:hidden;
+  }
+  .preloader-logo span{color:#c1121f;}
+  .preloader-line{
+    width:0;height:1px;background:#e9c349;
+    margin-top:24px;
+    animation:expandLine 1.8s cubic-bezier(.22,1,.36,1) .3s forwards;
+  }
+  @keyframes expandLine{to{width:200px;}}
+  .preloader-pct{
+    font-size:11px;letter-spacing:.4em;color:#e9c349;
+    margin-top:16px;font-family:'Manrope',sans-serif;font-weight:700;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar{width:4px;}
+  ::-webkit-scrollbar-track{background:#0c0f0f;}
+  ::-webkit-scrollbar-thumb{background:#c1121f;}
+
+  /* ── PROGRESS BAR ── */
+  #progressBar{
+    position:fixed;top:0;left:0;height:2px;width:0%;
+    background:linear-gradient(90deg,#c1121f,#e9c349);
+    z-index:200;transition:width .1s;
+  }
+
+  /* ── CANVAS ── */
+  #emberCanvas{
+    position:absolute;top:0;left:0;width:100%;height:100%;
+    pointer-events:none;z-index:10;
+  }
+
+  /* ── REVEAL ANIMATIONS ── */
+  .reveal{
+    opacity:0;transform:translateY(50px);
+    transition:opacity 1.2s cubic-bezier(.22,1,.36,1),transform 1.2s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal.active{opacity:1;transform:translateY(0);}
+  .reveal-left{
+    opacity:0;transform:translateX(-60px);
+    transition:opacity 1.2s cubic-bezier(.22,1,.36,1),transform 1.2s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal-left.active{opacity:1;transform:translateX(0);}
+  .reveal-right{
+    opacity:0;transform:translateX(60px);
+    transition:opacity 1.2s cubic-bezier(.22,1,.36,1),transform 1.2s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal-right.active{opacity:1;transform:translateX(0);}
+
+  /* ── GLASS ── */
+  .glass-concierge{
+    background:rgba(18,20,20,.65);
+    backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
+    border:1px solid rgba(233,195,73,.18);
+    box-shadow:0 32px 64px -12px rgba(0,0,0,.7);
+  }
+
+  /* ── GOLD SHIMMER ── */
+  .gold-shimmer{
+    background:linear-gradient(90deg,#e9c349 0%,#fff8dc 45%,#e9c349 100%);
+    background-size:200% auto;
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:shimmer 4s linear infinite;
+  }
+  @keyframes shimmer{to{background-position:200% center;}}
+
+  /* ── HERO TITLE ── */
+  .hero-title{text-shadow:0 10px 40px rgba(0,0,0,.9);}
+
+  /* ── GOLD DIVIDER ── */
+  .gold-divider{height:1px;background:linear-gradient(90deg,transparent,#e9c349,transparent);}
+
+  /* ── HEAT VISION ── */
+  .heat-vision-container::after{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at var(--x,50%) var(--y,50%),rgba(193,18,31,.35) 0%,transparent 60%);
+    opacity:0;transition:opacity .3s;pointer-events:none;
+  }
+  .heat-vision-container:hover::after{opacity:1;}
+  .heat-vision-container:hover .heat-vision-img{
+    filter:saturate(1.6) brightness(1.2) contrast(1.1);
+    transform:scale(1.05);
+  }
+  .heat-vision-img{transition:all .8s cubic-bezier(.22,1,.36,1);}
+
+  /* ── MENU TABS ── */
+  .menu-tab{
+    font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;
+    letter-spacing:.3em;text-transform:uppercase;
+    padding:10px 24px;border-bottom:2px solid transparent;
+    color:rgba(226,226,226,.5);cursor:pointer;
+    transition:all .3s;white-space:nowrap;
+  }
+  .menu-tab:hover{color:#e2e2e2;}
+  .menu-tab.active{color:#e9c349;border-bottom-color:#e9c349;}
+  .menu-panel{display:none;}
+  .menu-panel.active{display:grid;}
+
+  /* ── MOBILE NAV ── */
+  #mobileNav{
+    position:fixed;inset:0;z-index:150;
+    background:#0c0f0f;
+    transform:translateX(100%);
+    transition:transform .6s cubic-bezier(.22,1,.36,1);
+  }
+  #mobileNav.open{transform:translateX(0);}
+
+  /* ── GALLERY LIGHTBOX ── */
+  #lightbox{
+    position:fixed;inset:0;z-index:300;
+    background:rgba(0,0,0,.95);
+    display:none;align-items:center;justify-content:center;
+    flex-direction:column;
+  }
+  #lightbox.open{display:flex;}
+  #lightbox img{max-height:85vh;max-width:90vw;object-fit:contain;}
+
+  /* ── STAT COUNTER ── */
+  .stat-num{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4rem);color:#e9c349;}
+
+  /* ── FLOATING CTA ── */
+  #floatingCta{
+    position:fixed;bottom:32px;right:32px;z-index:99;
+    opacity:0;transform:translateY(20px);
+    transition:all .5s cubic-bezier(.22,1,.36,1);
+    pointer-events:none;
+  }
+  #floatingCta.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
+
+  /* ── CUSTOM FORM ── */
+  .form-input{
+    width:100%;background:transparent;border:0;border-bottom:1px solid #5c403d;
+    padding:16px 0;color:#e2e2e2;font-size:17px;font-family:'Manrope',sans-serif;
+    transition:border-color .3s;outline:none;
+  }
+  .form-input:focus{border-bottom-color:#e9c349;}
+  .form-input::placeholder{color:rgba(226,226,226,.3);}
+  .form-select{
+    width:100%;background:#1e2020;border:0;border-bottom:1px solid #5c403d;
+    padding:16px 0;color:#e2e2e2;font-size:17px;font-family:'Manrope',sans-serif;
+    transition:border-color .3s;outline:none;-webkit-appearance:none;cursor:pointer;
+  }
+  .form-select:focus{border-bottom-color:#e9c349;}
+
+  /* ── TESTIMONIAL CARD ── */
+  .testimonial-card{
+    background:#1e2020;border:1px solid rgba(92,64,61,.3);
+    padding:48px;transition:border-color .4s;
+  }
+  .testimonial-card:hover{border-color:#e9c349;}
+
+  /* ── CHEF CARD ── */
+  .chef-stat{border-top:1px solid rgba(233,195,73,.2);padding-top:24px;}
+
+  /* ── SELECTION ── */
+  ::selection{background:#c1121f;color:#fff;}
+
+  /* ── CURSOR GLOW ── */
+  #cursorGlow{
+    width:300px;height:300px;border-radius:50%;
+    background:radial-gradient(circle,rgba(193,18,31,.08) 0%,transparent 70%);
+    position:fixed;pointer-events:none;z-index:1;
+    transform:translate(-50%,-50%);
+    transition:left .12s ease,top .12s ease;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes slideUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  @keyframes pulse-gold{0%,100%{box-shadow:0 0 0 0 rgba(233,195,73,.4);}50%{box-shadow:0 0 0 12px rgba(233,195,73,0);}}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+
+  .float-anim{animation:float 4s ease-in-out infinite;}
+
+  /* ── PRIVATE DINING BG ── */
+  .private-bg{
+    background:linear-gradient(135deg,#1a0a0a 0%,#0c0f0f 50%,#1a1408 100%);
+  }
+
+  /* ── PRESS LOGO ── */
+  .press-logo{
+    font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
+    color:rgba(226,226,226,.25);letter-spacing:.2em;
+    transition:color .3s;
+  }
+  .press-logo:hover{color:rgba(233,195,73,.6);}
+
+  /* ── STAR RATING ── */
+  .star{color:#e9c349;font-size:14px;}
+
+  /* ── CART ICON BADGE ── */
+  #cartBadge{
+    position:absolute;top:-6px;right:-6px;
+    background:#c1121f;color:#fff;
+    border-radius:50%;width:18px;height:18px;
+    font-size:10px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;transform:scale(0);
+    transition:all .3s cubic-bezier(.22,1,.36,1);
+  }
+  #cartBadge.visible{opacity:1;transform:scale(1);}
+
+  /* ── CART DRAWER ── */
+  #cartDrawer{
+    position:fixed;top:0;right:0;height:100%;width:min(420px,100vw);
+    background:#121414;border-left:1px solid rgba(92,64,61,.3);
+    z-index:500;transform:translateX(100%);
+    transition:transform .5s cubic-bezier(.22,1,.36,1);
+    display:flex;flex-direction:column;
+    box-shadow:-32px 0 64px rgba(0,0,0,.7);
+  }
+  #cartDrawer.open{transform:translateX(0);}
+  #cartOverlay{
+    position:fixed;inset:0;z-index:499;
+    background:rgba(0,0,0,.6);
+    opacity:0;pointer-events:none;
+    transition:opacity .4s;
+  }
+  #cartOverlay.open{opacity:1;pointer-events:auto;}
+
+  /* ── CHECKOUT MODAL ── */
+  #checkoutModal{
+    position:fixed;inset:0;z-index:600;
+    background:rgba(0,0,0,.85);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;
+    transition:opacity .4s;
+    padding:20px;
+  }
+  #checkoutModal.open{opacity:1;pointer-events:auto;}
+  #checkoutBox{
+    background:#1e2020;border:1px solid rgba(233,195,73,.2);
+    width:100%;max-width:540px;max-height:90vh;overflow-y:auto;
+    transform:translateY(30px);
+    transition:transform .4s cubic-bezier(.22,1,.36,1);
+  }
+  #checkoutModal.open #checkoutBox{transform:translateY(0);}
+
+  /* ── MENU ITEM CARD ── */
+  .menu-item-card{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px 0;border-bottom:1px solid rgba(92,64,61,.2);
+    gap:16px;
+  }
+  .menu-item-card:last-child{border-bottom:0;}
+  .add-btn{
+    width:36px;height:36px;flex-shrink:0;
+    border:1px solid rgba(193,18,31,.5);
+    background:rgba(193,18,31,.1);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:all .3s;
+  }
+  .add-btn:hover{background:#c1121f;border-color:#c1121f;}
+  .add-btn:hover .mat-icon{color:#fff;}
+  .mat-icon{color:#c1121f;font-size:18px;transition:color .3s;}
+  .cart-item-row{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 0;border-bottom:1px solid rgba(92,64,61,.15);
+  }
+  .cart-item-row:last-child{border-bottom:0;}
+  .qty-btn{
+    width:28px;height:28px;border:1px solid rgba(92,64,61,.4);
+    background:transparent;color:#e2e2e2;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .25s;font-size:16px;
+  }
+  .qty-btn:hover{border-color:#e9c349;color:#e9c349;}
+</style>
+</head>
+<body class="font-body">
+
+<!-- CURSOR GLOW -->
+<div id="cursorGlow"></div>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="preloader-logo">VIENDO <span>GRILL</span></div>
+  <div class="preloader-line"></div>
+  <div class="preloader-pct" id="preloaderPct">PRÉPARATION DE VOTRE EXPÉRIENCE</div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div id="progressBar"></div>
+
+<!-- FLOATING CTA -->
+<div id="floatingCta">
+  <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})" class="bg-primary-container text-white px-6 py-4 font-label-caps text-[11px] tracking-[.3em] shadow-2xl hover:bg-red-700 transition-all flex items-center gap-3" style="animation:pulse-gold 3s ease-in-out infinite;">
+    <span class="material-symbols-outlined text-lg" style="font-size:18px;">restaurant</span>
+    RÉSERVER
+  </button>
+</div>
+
+<!-- MOBILE NAV -->
+<div id="mobileNav">
+  <div class="h-full flex flex-col px-10 py-12">
+    <div class="flex justify-between items-center mb-20">
+      <div class="text-2xl font-display tracking-[.4em]">VIENDO <span class="text-primary-container">GRILL</span></div>
+      <button onclick="closeMobileNav()" class="text-on-surface">
+        <span class="material-symbols-outlined text-3xl">close</span>
+      </button>
+    </div>
+    <nav class="flex flex-col gap-10 flex-1">
+      <a href="#collection" onclick="closeMobileNav()" class="text-4xl font-display text-on-surface/80 hover:text-secondary transition-colors border-b border-outline-variant/10 pb-10">La Carte</a>
+      <a href="#hearth" onclick="closeMobileNav()" class="text-4xl font-display text-on-surface/80 hover:text-secondary transition-colors border-b border-outline-variant/10 pb-10">Le Foyer</a>
+      <a href="#private" onclick="closeMobileNav()" class="text-4xl font-display text-on-surface/80 hover:text-secondary transition-colors border-b border-outline-variant/10 pb-10">Dîner Privé</a>
+      <a href="#reservation" onclick="closeMobileNav()" class="text-4xl font-display text-secondary">Réserver une Table</a>
+    </nav>
+    <div class="mt-auto pt-12 border-t border-outline-variant/10">
+      <p class="text-on-surface/40 text-sm tracking-widest">Gate Village, DIFC — Dubai, UAE</p>
+      <p class="text-on-surface/40 text-sm mt-2 tracking-widest">+971 4 000 0000</p>
+    </div>
+  </div>
+</div>
+
+<!-- NAVIGATION -->
+<header class="fixed top-0 left-0 w-full z-[100] transition-all duration-700" id="topNav">
+  <nav class="flex justify-between items-center w-full px-8 md:px-20 h-24 max-w-[1440px] mx-auto">
+    <a href="#" class="text-2xl font-display tracking-[.4em] text-on-surface uppercase hover:text-secondary transition-colors">
+      VIENDO <span class="text-primary-container">GRILL</span>
+    </a>
+    <div class="hidden md:flex gap-10 items-center">
+      <a href="#" class="text-secondary font-label-caps text-label-caps border-b border-secondary/50 pb-1">RÉSERVER</a>
+      <a href="#collection" class="text-on-surface/70 hover:text-white transition-colors font-label-caps text-label-caps uppercase">La Carte</a>
+      <a href="#hearth" class="text-on-surface/70 hover:text-white transition-colors font-label-caps text-label-caps uppercase">Le Foyer</a>
+      <a href="#private" class="text-on-surface/70 hover:text-white transition-colors font-label-caps text-label-caps uppercase">Privé</a>
+      <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})" class="bg-primary-container text-white px-8 py-3 font-label-caps text-[11px] tracking-[.3em] hover:bg-red-700 transition-all duration-500 shadow-xl">
+        EXPÉRIENCE
+      </button>
+      <button onclick="openCart()" class="relative w-10 h-10 flex items-center justify-center hover:text-secondary transition-colors text-on-surface">
+        <span class="material-symbols-outlined" style="font-size:24px;">shopping_basket</span>
+        <span id="cartBadge">0</span>
+      </button>
+    </div>
+    <div class="md:hidden flex items-center gap-4">
+      <button onclick="openCart()" class="relative w-10 h-10 flex items-center justify-center text-on-surface">
+        <span class="material-symbols-outlined" style="font-size:22px;">shopping_basket</span>
+        <span id="cartBadgeMob" class="absolute -top-1 -right-1 bg-primary-container text-white rounded-full w-4 h-4 text-[9px] font-bold flex items-center justify-center opacity-0 scale-0 transition-all duration-300">0</span>
+      </button>
+      <button onclick="openMobileNav()" class="text-on-surface hover:text-secondary transition-colors">
+        <span class="material-symbols-outlined text-3xl">menu</span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- HERO                                        -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden" id="hero">
+  <div class="absolute inset-0 z-0">
+    <img alt="Luxury Steakhouse Interior" id="heroImg"
+      class="w-full h-full object-cover brightness-[0.38] scale-110"
+      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGWkG45cMQjuL_D6qcOAa3DmYXLGKKgGgYZWBz_3kkAX143LhbhEl8zhjLUIiv1S-jJeCVGwXtqrIFBMRj3Nxje9udzrMh5a15-6M3t4WWE6eDVw9WNxD2MmutEWsJYGx7Vg3FLtoPprPIFpVnkm12PQJtYUrXzCvhtHe42-yn2VnHqTNWkKbmbetUab_K3Syj6sOJ2K8twWAHotXLoBYRAQOFLsvJGYuwDiT7WXFkIXmwh7P8iGYEwH6Ez-HJbk--K4E9hYNLebPw"/>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-background/10 to-background"></div>
+  </div>
+  <canvas id="emberCanvas"></canvas>
+  <div class="relative z-20 flex flex-col items-center px-4 max-w-5xl">
+    <div class="mb-8 opacity-0 animate-[fadeIn_2s_ease-out_1.8s_forwards]">
+      <span class="text-secondary font-label-caps text-label-caps tracking-[.5em] uppercase">Est. 2024 &bull; Dubai</span>
+    </div>
+    <h1 class="text-display-lg font-display text-on-surface mb-6 hero-title opacity-0 animate-[slideUp_1.5s_ease-out_2s_forwards]">
+      Quand le Feu Rencontre <br/><span class="gold-shimmer">la Perfection</span>
+    </h1>
+    <p class="text-xl md:text-2xl font-display text-on-surface/70 italic mb-14 opacity-0 animate-[fadeIn_2s_ease-out_2.4s_forwards]">
+      L'Art Souverain de la Flamme Vive
+    </p>
+    <div class="flex flex-col md:flex-row gap-6 opacity-0 animate-[fadeIn_2s_ease-out_2.8s_forwards]">
+      <button onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})"
+        class="group relative bg-primary-container text-white px-14 py-5 font-label-caps text-label-caps overflow-hidden">
+        <span class="relative z-10">MENU</span>
+        <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+      </button>
+      <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})"
+        class="group border border-secondary/40 text-secondary px-14 py-5 font-label-caps text-label-caps hover:bg-secondary hover:text-on-secondary transition-all">
+        BOOK AN EXPERIENCE - احجز طاولة
+      </button>
+    </div>
+  </div>
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-4 opacity-50">
+    <span class="font-label-caps text-[10px] tracking-widest">DÉFILER</span>
+    <div class="w-px h-16 bg-gradient-to-b from-secondary to-transparent"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- STATS BAR                                   -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="bg-surface-container py-16 px-8 md:px-20 border-y border-outline-variant/10">
+  <div class="max-w-[1440px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 text-center reveal">
+    <div>
+      <div class="stat-num" data-target="45">0</div>
+      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2">JOURS D'AFFINAGE</div>
+    </div>
+    <div>
+      <div class="stat-num" data-target="1200" data-suffix="°">0</div>
+      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2">FAHRENHEIT DE SAISIE</div>
+    </div>
+    <div>
+      <div class="stat-num" data-target="180" data-suffix="+">0</div>
+      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2">RÉFÉRENCES DE CAVE</div>
+    </div>
+    <div>
+      <div class="stat-num" data-target="5">0</div>
+      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2">RECONNAISSANCE MICHELIN</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PHILOSOPHY / STORY                          -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="relative py-40 px-8 md:px-20 bg-background overflow-hidden" id="hearth">
+  <div class="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+    <div class="reveal-left">
+      <h2 class="font-label-caps text-secondary mb-6">LA PHILOSOPHIE</h2>
+      <h3 class="text-headline-lg font-display mb-10 leading-tight">La Maîtrise <br/>du Feu Vif</h3>
+      <div class="space-y-7 text-on-surface-variant text-lg leading-relaxed font-light">
+        <p>Chez VIENDO GRILL, nous ne cuisinons pas — nous orchestrons un dialogue entre des éléments ancestraux. Notre foyer est l'âme du restaurant, où des charbons de chêne blanc et de mesquite sont sélectionnés chaque jour pour créer une architecture thermique parfaite.</p>
+        <p>Chaque pièce est un témoignage de patience, affinée pendant 45 jours dans notre chambre climatisée, permettant aux saveurs de se développer en quelque chose de véritablement profond. C'est une gastronomie de haute précision pour les rares connaisseurs.</p>
+        <p>Notre approvisionnement s'étend aux fermes les plus prestigieuses du Japon, d'Australie et du Texas — chaque producteur choisi non pas par le prix, mais par la philosophie.</p>
+      </div>
+      <div class="mt-16 grid grid-cols-2 gap-12">
+        <div>
+          <div class="text-4xl font-display text-secondary mb-2">45J</div>
+          <div class="font-label-caps text-[10px] uppercase opacity-50">Processus d'Affinage</div>
+        </div>
+        <div>
+          <div class="text-4xl font-display text-secondary mb-2">1200°</div>
+          <div class="font-label-caps text-[10px] uppercase opacity-50">Saisie Fahrenheit</div>
+        </div>
+      </div>
+      <div class="gold-divider my-14"></div>
+      <button onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})"
+        class="group flex items-center gap-4 text-secondary font-label-caps text-label-caps hover:gap-6 transition-all">
+        EXPLORER LA CARTE
+        <span class="material-symbols-outlined text-base" style="font-size:18px;">arrow_forward</span>
+      </button>
+    </div>
+    <div class="relative reveal-right h-[720px] group overflow-hidden shadow-2xl">
+      <img alt="The Grill" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 brightness-90"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQwL3TlzD_JyJ60SSxO4aTPvE9oHSL9V7H8ioppRxUVmopQhhVoXDFZtQM7fCzLIaqleqbuBVUMbmtgvrkihHg8VBruI8eY5tc-zqfCRU6IbqTU-d2JMBW4BTlB4ElyMkcmMM0ug2_6-9m5PzDzrnICclcxUtj1SlbGuV7m_GxGywdRvb631hnqwgSXSNP2unzHluaSZurBRTirLc40QHbTe8LJeBoaXSeM_abfsZ8NI0dnS4YDdDCJElBtFCL5ltNYTgYgM80Tqqj"/>
+      <!-- Gold corner accents -->
+      <div class="absolute top-6 left-6 w-12 h-12 border-t-2 border-l-2 border-secondary/60 pointer-events-none"></div>
+      <div class="absolute bottom-6 right-6 w-12 h-12 border-b-2 border-r-2 border-secondary/60 pointer-events-none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- FULL MENU / THE COLLECTION                  -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="py-40 bg-surface-container-lowest" id="collection">
+  <div class="max-w-[1440px] mx-auto px-8 md:px-20">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-20 reveal">
+      <div>
+        <h2 class="font-label-caps text-primary-container mb-4">LA CARTE</h2>
+        <h3 class="text-headline-lg font-display">Sélections Souveraines</h3>
+      </div>
+      <p class="text-on-surface-variant font-light max-w-sm text-right mt-6 md:mt-0 italic">
+        Chaque plat est un acte réfléchi. Aucun compromis dans le sourcing, la préparation ou la présentation.
+      </p>
+    </div>
+
+    <!-- Menu Tabs -->
+    <div class="flex gap-0 overflow-x-auto border-b border-outline-variant/20 mb-16 reveal" id="menuTabs">
+      <button class="menu-tab active" onclick="switchTab('grillades')">GRILLADES</button>
+      <button class="menu-tab" onclick="switchTab('chaudes')">ENTRÉES CHAUDES</button>
+      <button class="menu-tab" onclick="switchTab('fumees')">VIANDES FUMÉES</button>
+      <button class="menu-tab" onclick="switchTab('froide')">ENTRÉE FROIDE</button>
+      <button class="menu-tab" onclick="switchTab('poissons')">POISSONS</button>
+    </div>
+
+    <!-- GRILLADES PANEL -->
+    <div class="menu-panel active grid-cols-1 md:grid-cols-2 gap-x-16" id="panel-grillades">
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20">VIANDES — PRIX VARIABLES SELON PESÉE</div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Côte d'agneau</h5><p class="text-on-surface/50 text-sm italic">250g</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">1050 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Côte d\'agneau', 1050)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Filet d'agneau</h5><p class="text-on-surface/50 text-sm italic">250g</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">1050 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Filet d\'agneau', 1050)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Gigot d'agneau</h5><p class="text-on-surface/50 text-sm italic">250g</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">1050 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Gigot d\'agneau', 1050)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Entrecôte de veau</h5><p class="text-on-surface/50 text-sm italic">200g</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">800 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Entrecôte de veau', 800)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Steak de veau</h5><p class="text-on-surface/50 text-sm italic">200g</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">800 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Steak de veau', 800)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20 md:mt-0 mt-4"> </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Filet de veau</h5><p class="text-on-surface/50 text-sm italic">200g</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">1100 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Filet de veau', 1100)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Foie d'agneau</h5><p class="text-on-surface/50 text-sm italic">200g</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">1300 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Foie d\'agneau', 1300)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Cœur d'agneau</h5><p class="text-on-surface/50 text-sm italic">200g</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">800 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Cœur d\'agneau', 800)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Rognons</h5><p class="text-on-surface/50 text-sm italic">200g</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">800 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Rognons', 800)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Merguez</h5><p class="text-on-surface/50 text-sm italic">200g</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">550 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Merguez', 550)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTRÉES CHAUDES PANEL -->
+    <div class="menu-panel grid-cols-1 md:grid-cols-2 gap-x-16" id="panel-chaudes">
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20">SOUPES & ACCOMPAGNEMENTS</div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Soupe</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">250 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Soupe', 250)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Chorba frik</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">250 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Chorba frik', 250)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Riz basmati</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">300 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Riz basmati', 300)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Frites PM</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">250 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Frites PM', 250)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Frites GM</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">450 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Frites GM', 450)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Purée</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">300 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Purée', 300)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20 md:mt-0 mt-4">PLATS & BOUREKS</div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Frites sauce fromage</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">400 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Frites sauce fromage', 400)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Plat varié PM</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">400 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Plat varié PM', 400)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Plat varié GM</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">700 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Plat varié GM', 700)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Bourek au poulet</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">150 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Bourek au poulet', 150)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Bourek à la viande hachée</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">200 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Bourek viande hachée', 200)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Légumes sautés</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">300 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Légumes sautés', 300)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIANDES FUMÉES PANEL -->
+    <div class="menu-panel grid-cols-1 md:grid-cols-2 gap-x-16" id="panel-fumees">
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20">VIANDES FUMÉES — AU KILO</div>
+        <div class="bg-surface-container p-8 border border-outline-variant/20 mb-6 reveal">
+          <p class="text-on-surface-variant text-sm italic mb-4">Viande de veau, Paul d'agneau, Souris d'agneau, Krouma</p>
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-secondary font-display text-xl">6 000 <sup class="text-xs font-body">DA</sup></span>
+              <span class="text-on-surface/40 font-label-caps text-[10px] ml-2">/ kg</span>
+            </div>
+            <button class="add-btn" onclick="addToCart('Viande fumée (1kg)', 6000)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20">BOUZELOUF & POULET</div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Bouzelouf</h5><p class="text-on-surface/50 text-sm italic">Servi avec garniture</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">2800 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Bouzelouf', 2800)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Demi Bouzelouf</h5><p class="text-on-surface/50 text-sm italic">Servi avec garniture</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">1500 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Demi Bouzelouf', 1500)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Cuisse de poulet</h5><p class="text-on-surface/50 text-sm italic">Servi avec garniture</p></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">700 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Cuisse de poulet', 700)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTRÉE FROIDE PANEL -->
+    <div class="menu-panel grid-cols-1 md:grid-cols-2 gap-x-16" id="panel-froide">
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20">SALADES</div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Salade César</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">500 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Salade César', 500)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Salade algérienne</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">300 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Salade algérienne', 300)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Salade tunisienne</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">350 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Salade tunisienne', 350)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Salade macédoine</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">300 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Salade macédoine', 300)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Salade de pâtes</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">350 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Salade de pâtes', 350)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20 md:mt-0 mt-4"> </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Salade au thon</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">400 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Salade au thon', 400)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Salade au fromage</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">500 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Salade au fromage', 500)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Salade suisse</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">300 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Salade suisse', 300)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Salade variée P.M</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">350 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Salade variée P.M', 350)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Salade variée G.M</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">600 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Salade variée G.M', 600)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POISSONS PANEL -->
+    <div class="menu-panel grid-cols-1 md:grid-cols-2 gap-x-16" id="panel-poissons">
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20">PLAT</div>
+        <div class="menu-item-card reveal">
+          <div><h5 class="text-lg font-display">Daurade grillée</h5></div>
+          <div class="flex items-center gap-3 flex-shrink-0">
+            <span class="text-secondary font-display text-lg">1500 <sup class="text-xs font-body">DA</sup></span>
+            <button class="add-btn" onclick="addToCart('Daurade grillée', 1500)"><span class="material-symbols-outlined mat-icon">add</span></button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="font-label-caps text-[10px] text-primary-container mb-6 pb-3 border-b border-outline-variant/20">FRUITS DE MER & POISSONS</div>
+        <div class="bg-surface-container p-8 border border-outline-variant/20 reveal">
+          <p class="text-on-surface/60 text-sm italic mb-3">À la pesée selon la demande</p>
+          <p class="text-on-surface-variant font-display text-base leading-relaxed">Espadon, Merlan, Crevette, Sardine khbizett</p>
+          <p class="text-on-surface/40 text-xs mt-4 font-label-caps tracking-widest">PRIX SELON MARCHÉ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- CHEF SPOTLIGHT                              -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="py-40 px-8 md:px-20 bg-background">
+  <div class="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+    <div class="relative reveal-left">
+      <div class="absolute -top-8 -left-8 text-[180px] font-display text-white/[0.03] leading-none select-none pointer-events-none">V</div>
+      <h2 class="font-label-caps text-secondary mb-6">LE CHEF</h2>
+      <h3 class="text-headline-lg font-display mb-8 leading-tight">Chef Marcus <br/><span class="italic text-on-surface/60">El-Rashid</span></h3>
+      <p class="text-on-surface-variant text-lg font-light leading-relaxed mb-8">
+        Formé dans trois cuisines étoilées au Guide Michelin à Paris, Tokyo et New York, le Chef Marcus incarne une philosophie de retenue et de précision. Chaque plat est réduit à sa vérité essentielle — le meilleur ingrédient, la température parfaite, le moment exact.
+      </p>
+      <p class="text-on-surface-variant text-lg font-light leading-relaxed mb-12">
+        Sa technique signature fusionne l'art du couteau japonais avec l'héritage du feu vif, créant un langage culinaire entièrement à lui. « Le feu est honnête », dit-il. « Il révèle tout. »
+      </p>
+      <div class="grid grid-cols-3 gap-8">
+        <div class="chef-stat">
+          <div class="text-3xl font-display text-secondary">18+</div>
+          <div class="font-label-caps text-[10px] text-on-surface/40 mt-2">ANS D'EXPÉRIENCE</div>
+        </div>
+        <div class="chef-stat">
+          <div class="text-3xl font-display text-secondary">3</div>
+          <div class="font-label-caps text-[10px] text-on-surface/40 mt-2">ÉTOILES MICHELIN</div>
+        </div>
+        <div class="chef-stat">
+          <div class="text-3xl font-display text-secondary">4</div>
+          <div class="font-label-caps text-[10px] text-on-surface/40 mt-2">CONTINENTS</div>
+        </div>
+      </div>
+    </div>
+    <div class="relative reveal-right">
+      <div class="relative h-[650px] overflow-hidden">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmzkRAAv1nUjrFoszf_b-xpsjzf6fmsPCU4Pe28n4Khl0nSk_QX00nfGwhQTELNlrbNTnt8UsLu7eeFLF5WApLIKqr03Tg4d63L9RwgRs6gdP2dQ8qMRGmyVsJ_ymHoyfgKsTAi01oxC4G035Ynj-TSizWQoMXlkBQrGivx35c6vdW7rvMfflQkP_0FXROyVy8bjVDCDOL1F3F6U6EYH-Byh2tYPwGwDnPP_vML-M1AADcQQ-UTo3NZFzJOoFOtOSPyq9vf0YfKlG9"
+          alt="Chef" class="w-full h-full object-cover brightness-75"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent"></div>
+      </div>
+      <div class="absolute -bottom-8 -right-8 bg-surface-container p-8 border border-secondary/30 max-w-xs">
+        <div class="text-secondary font-display text-5xl mb-2 italic">"</div>
+        <p class="text-on-surface-variant font-display italic text-sm leading-relaxed">
+          Le feu ne pardonne pas la médiocrité. Moi non plus.
+        </p>
+        <div class="mt-4 font-label-caps text-[10px] text-secondary/60">— CHEF MARCUS EL-RASHID</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- GALLERY                                     -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="py-24 bg-surface-container-lowest">
+  <div class="max-w-[1440px] mx-auto px-8 md:px-20">
+    <div class="text-center mb-20 reveal">
+      <h2 class="font-label-caps text-secondary mb-4">L'ATMOSPHÈRE</h2>
+      <h3 class="text-headline-lg font-display">Au Cœur de Viendo</h3>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="col-span-2 row-span-2 relative overflow-hidden h-96 md:h-auto cursor-pointer gallery-item group reveal" onclick="openLightbox(this)">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGWkG45cMQjuL_D6qcOAa3DmYXLGKKgGgYZWBz_3kkAX143LhbhEl8zhjLUIiv1S-jJeCVGwXtqrIFBMRj3Nxje9udzrMh5a15-6M3t4WWE6eDVw9WNxD2MmutEWsJYGx7Vg3FLtoPprPIFpVnkm12PQJtYUrXzCvhtHe42-yn2VnHqTNWkKbmbetUab_K3Syj6sOJ2K8twWAHotXLoBYRAQOFLsvJGYuwDiT7WXFkIXmwh7P8iGYEwH6Ez-HJbk--K4E9hYNLebPw"
+          alt="Gallery 1" class="w-full h-full object-cover brightness-70 group-hover:scale-105 group-hover:brightness-90 transition-all duration-700"/>
+        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+          <span class="material-symbols-outlined text-white text-4xl" style="font-size:40px;">zoom_in</span>
+        </div>
+      </div>
+      <div class="relative overflow-hidden h-44 cursor-pointer gallery-item group reveal" style="transition-delay:.1s" onclick="openLightbox(this)">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVvRTw-Dnxif3coDce5V9PCzVnnUi7HLMhn_B-peMcHBe2Qbvon73p8IKUSL4WL80LCpCX6a84KHW8FE4OqC1eFBFSGqEHwtVeF1jDU8GjK-TuR_jps8KCiw-uubp8gRC1pyLxmf7reme9FnlJGFu9-35u1PzsSGXRyX-o_O_y0RNm8zduGWJdCLp6dYbuIdSrVhJThMC_-XHV0iYh2SFVHBnfDShtsdMGDj-MevpA3lEC3mRc-xrUkuqVa-VJ7jbPgJAAM_UcLUCO"
+          alt="Gallery 2" class="w-full h-full object-cover brightness-60 group-hover:scale-105 group-hover:brightness-80 transition-all duration-700"/>
+        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+          <span class="material-symbols-outlined text-white text-4xl" style="font-size:36px;">zoom_in</span>
+        </div>
+      </div>
+      <div class="relative overflow-hidden h-44 cursor-pointer gallery-item group reveal" style="transition-delay:.2s" onclick="openLightbox(this)">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQwL3TlzD_JyJ60SSxO4aTPvE9oHSL9V7H8ioppRxUVmopQhhVoXDFZtQM7fCzLIaqleqbuBVUMbmtgvrkihHg8VBruI8eY5tc-zqfCRU6IbqTU-d2JMBW4BTlB4ElyMkcmMM0ug2_6-9m5PzDzrnICclcxUtj1SlbGuV7m_GxGywdRvb631hnqwgSXSNP2unzHluaSZurBRTirLc40QHbTe8LJeBoaXSeM_abfsZ8NI0dnS4YDdDCJElBtFCL5ltNYTgYgM80Tqqj"
+          alt="Gallery 3" class="w-full h-full object-cover brightness-60 group-hover:scale-105 group-hover:brightness-80 transition-all duration-700"/>
+        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+          <span class="material-symbols-outlined text-white text-4xl" style="font-size:36px;">zoom_in</span>
+        </div>
+      </div>
+      <div class="relative overflow-hidden h-44 cursor-pointer gallery-item group reveal" style="transition-delay:.3s" onclick="openLightbox(this)">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmzkRAAv1nUjrFoszf_b-xpsjzf6fmsPCU4Pe28n4Khl0nSk_QX00nfGwhQTELNlrbNTnt8UsLu7eeFLF5WApLIKqr03Tg4d63L9RwgRs6gdP2dQ8qMRGmyVsJ_ymHoyfgKsTAi01oxC4G035Ynj-TSizWQoMXlkBQrGivx35c6vdW7rvMfflQkP_0FXROyVy8bjVDCDOL1F3F6U6EYH-Byh2tYPwGwDnPP_vML-M1AADcQQ-UTo3NZFzJOoFOtOSPyq9vf0YfKlG9"
+          alt="Gallery 4" class="w-full h-full object-cover brightness-60 group-hover:scale-105 group-hover:brightness-80 transition-all duration-700"/>
+        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+          <span class="material-symbols-outlined text-white text-4xl" style="font-size:36px;">zoom_in</span>
+        </div>
+      </div>
+      <div class="relative overflow-hidden h-44 cursor-pointer gallery-item group reveal" style="transition-delay:.4s" onclick="openLightbox(this)">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG9pgcM2csX8KDDDRhKUSiEebs-odHWIr7HULLXOegLwAxb8KopfFeDmmtsXAFj1xf5dH9ivAv4GXpt2KB6IyJ7l2MCMkA_9RWsw_GsvRMTRJtofqU11UdQrmDlDYX5VUcDZKmDYwAZHhRuc42skhApncfIfIVvqfGyyLDXyt8sXhcDpmnVAga5L2knbXA-faPetzSkz7y3NORuRD-ZsGQoKRY3Ld96ALOYR1VXNXR_IcSfe55pM7pyjWwtqjpoRSBdbfMkGRtI-9d"
+          alt="Gallery 5" class="w-full h-full object-cover brightness-60 group-hover:scale-105 group-hover:brightness-80 transition-all duration-700"/>
+        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+          <span class="material-symbols-outlined text-white text-4xl" style="font-size:36px;">zoom_in</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button onclick="closeLightbox()" class="absolute top-8 right-8 text-white/70 hover:text-white transition-colors">
+    <span class="material-symbols-outlined" style="font-size:40px;">close</span>
+  </button>
+  <img id="lightboxImg" src="" alt=""/>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PRIVATE DINING                              -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="py-40 px-8 md:px-20 private-bg" id="private">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+      <div class="reveal-right order-2 lg:order-1">
+        <div class="relative h-[600px] overflow-hidden border border-secondary/20">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmzkRAAv1nUjrFoszf_b-xpsjzf6fmsPCU4Pe28n4Khl0nSk_QX00nfGwhQTELNlrbNTnt8UsLu7eeFLF5WApLIKqr03Tg4d63L9RwgRs6gdP2dQ8qMRGmyVsJ_ymHoyfgKsTAi01oxC4G035Ynj-TSizWQoMXlkBQrGivx35c6vdW7rvMfflQkP_0FXROyVy8bjVDCDOL1F3F6U6EYH-Byh2tYPwGwDnPP_vML-M1AADcQQ-UTo3NZFzJOoFOtOSPyq9vf0YfKlG9"
+            alt="Private Dining" class="w-full h-full object-cover brightness-60"/>
+          <div class="absolute inset-0 bg-gradient-to-r from-background/60 to-transparent"></div>
+        </div>
+      </div>
+      <div class="reveal-left order-1 lg:order-2">
+        <h2 class="font-label-caps text-secondary mb-6">EXPÉRIENCES EXCLUSIVES</h2>
+        <h3 class="text-headline-lg font-display mb-10 leading-tight">Les Salons <br/>Privés</h3>
+        <p class="text-on-surface-variant text-lg font-light leading-relaxed mb-10">
+          Pour ceux qui exigent une intimité absolue, VIENDO GRILL propose quatre salons privés. Chaque espace est une déclaration — art sélectionné à la main, vaisselle sur mesure, et un concierge dédié qui anticipe chaque désir avant qu'il ne soit exprimé.
+        </p>
+        <div class="space-y-6 mb-12">
+          <div class="flex items-start gap-6 border-b border-outline-variant/10 pb-6">
+            <span class="material-symbols-outlined text-secondary flex-shrink-0" style="font-size:22px;">groups</span>
+            <div>
+              <div class="font-label-caps text-[10px] text-secondary mb-1">CAPACITÉ</div>
+              <div class="text-on-surface font-light">Cadres intimes de 2 à 24 convives</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-6 border-b border-outline-variant/10 pb-6">
+            <span class="material-symbols-outlined text-secondary flex-shrink-0" style="font-size:22px;">menu_book</span>
+            <div>
+              <div class="font-label-caps text-[10px] text-secondary mb-1">MENU SUR MESURE</div>
+              <div class="text-on-surface font-light">Menus dégustation conçus par le Chef Marcus</div>
+            </div>
+          </div>
+          <div class="flex items-start gap-6">
+            <span class="material-symbols-outlined text-secondary flex-shrink-0" style="font-size:22px;">wine_bar</span>
+            <div>
+              <div class="font-label-caps text-[10px] text-secondary mb-1">SOMMELIER</div>
+              <div class="text-on-surface font-light">Sommelier privé avec accès à la cave</div>
+            </div>
+          </div>
+        </div>
+        <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})"
+          class="border border-secondary/50 text-secondary px-12 py-5 font-label-caps text-label-caps hover:bg-secondary hover:text-on-secondary transition-all">
+          NOUS CONTACTER
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PRESS / TESTIMONIALS                        -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="py-40 px-8 md:px-20 bg-background">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="text-center mb-20 reveal">
+      <h2 class="font-label-caps text-secondary mb-4">ILS EN PARLENT</h2>
+      <div class="flex flex-wrap justify-center gap-12 mt-12">
+        <div class="press-logo">THE TIMES</div>
+        <div class="press-logo">VOGUE</div>
+        <div class="press-logo">ESQUIRE</div>
+        <div class="press-logo">CONDÉ NAST</div>
+        <div class="press-logo">TATLER</div>
+        <div class="press-logo">FORBES</div>
+      </div>
+    </div>
+    <div class="gold-divider mb-24 reveal"></div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="testimonial-card reveal">
+        <div class="flex gap-1 mb-6">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="font-display italic text-on-surface/80 text-lg leading-relaxed mb-8">
+          « La steakhouse la plus souveraine du Moyen-Orient. Le Chef Marcus orchestre le feu comme un chef d'orchestre — chaque assiette est une performance. »
+        </p>
+        <div class="font-label-caps text-[10px] text-secondary">— JAMES WHITFIELD, THE TIMES</div>
+      </div>
+      <div class="testimonial-card reveal" style="transition-delay:.15s">
+        <div class="flex gap-1 mb-6">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="font-display italic text-on-surface/80 text-lg leading-relaxed mb-8">
+          « VIENDO GRILL n'est pas un restaurant. C'est une conviction. Le Wagyu A5 justifie à lui seul le vol jusqu'à Dubaï. »
+        </p>
+        <div class="font-label-caps text-[10px] text-secondary">— MARINA SANTOS, CONDÉ NAST TRAVELLER</div>
+      </div>
+      <div class="testimonial-card reveal" style="transition-delay:.3s">
+        <div class="flex gap-1 mb-6">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="font-display italic text-on-surface/80 text-lg leading-relaxed mb-8">
+          « Dans une ville d'extravagance, VIENDO parvient encore à surprendre. La retenue est le luxe. »
+        </p>
+        <div class="font-label-caps text-[10px] text-secondary">— DAVID CHEN, FORBES LIFESTYLE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- RESERVATION SECTION                         -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="relative py-40 overflow-hidden" id="reservation">
+  <div class="absolute inset-0 z-0">
+    <img alt="Dining Room" class="w-full h-full object-cover brightness-[0.12] grayscale-[0.3]"
+      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmzkRAAv1nUjrFoszf_b-xpsjzf6fmsPCU4Pe28n4Khl0nSk_QX00nfGwhQTELNlrbNTnt8UsLu7eeFLF5WApLIKqr03Tg4d63L9RwgRs6gdP2dQ8qMRGmyVsJ_ymHoyfgKsTAi01oxC4G035Ynj-TSizWQoMXlkBQrGivx35c6vdW7rvMfflQkP_0FXROyVy8bjVDCDOL1F3F6U6EYH-Byh2tYPwGwDnPP_vML-M1AADcQQ-UTo3NZFzJOoFOtOSPyq9vf0YfKlG9"/>
+    <div class="absolute inset-0 bg-gradient-to-b from-background/40 to-background/80"></div>
+  </div>
+  <div class="max-w-3xl mx-auto px-8 relative z-10">
+    <div class="glass-concierge p-12 md:p-20 reveal" id="reservationForm">
+      <div class="text-center mb-16">
+        <h2 class="font-label-caps text-secondary mb-4">CONCIERGERIE DIGITALE</h2>
+        <h3 class="text-headline-lg font-display mb-4">Demander une Table</h3>
+        <p class="text-on-surface-variant font-light tracking-[.1em]">Un membre de notre équipe confirmera dans les 2 heures.</p>
+      </div>
+      <form onsubmit="handleReservation(event)" class="space-y-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div class="text-left">
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">PRÉNOM</label>
+            <input type="text" required placeholder="Votre prénom" class="form-input" id="fname"/>
+          </div>
+          <div class="text-left">
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">NOM</label>
+            <input type="text" required placeholder="Votre nom" class="form-input" id="lname"/>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div class="text-left">
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">E-MAIL</label>
+            <input type="email" required placeholder="votre@email.com" class="form-input" id="email"/>
+          </div>
+          <div class="text-left">
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">TÉLÉPHONE</label>
+            <input type="tel" placeholder="+971 50 000 0000" class="form-input" id="phone"/>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div class="text-left">
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">DATE</label>
+            <input type="date" required class="form-input" id="resDate"/>
+          </div>
+          <div class="text-left">
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">HEURE</label>
+            <select class="form-select" id="resTime">
+              <option value="19:00">7:00 PM</option>
+              <option value="19:30">7:30 PM</option>
+              <option value="20:00">8:00 PM</option>
+              <option value="20:30">8:30 PM</option>
+              <option value="21:00">9:00 PM</option>
+              <option value="21:30">9:30 PM</option>
+              <option value="22:00">10:00 PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div class="text-left">
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">CONVIVES</label>
+            <select class="form-select" id="guests">
+              <option value="1">1 Convive</option>
+              <option value="2" selected>2 Convives</option>
+              <option value="3">3 Convives</option>
+              <option value="4">4 Convives</option>
+              <option value="5">5 Convives</option>
+              <option value="6">6 Convives</option>
+              <option value="7+">7+ — Dîner Privé</option>
+            </select>
+          </div>
+          <div class="text-left">
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">OCCASION</label>
+            <select class="form-select" id="occasion">
+              <option value="none">Aucune occasion particulière</option>
+              <option value="birthday">Anniversaire</option>
+              <option value="anniversary">Célébration</option>
+              <option value="business">Dîner d'affaires</option>
+              <option value="proposal">Demande en mariage</option>
+              <option value="other">Autre</option>
+            </select>
+          </div>
+        </div>
+        <div class="text-left">
+          <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">DEMANDES PARTICULIÈRES</label>
+          <input type="text" placeholder="Régimes alimentaires, préférences ou notes…" class="form-input" id="requests"/>
+        </div>
+        <button type="submit"
+          class="w-full bg-primary-container text-white py-6 font-label-caps text-label-caps tracking-[.4em] hover:bg-red-700 transition-all shadow-2xl relative overflow-hidden group">
+          <span class="relative z-10" id="submitBtnText">DEMANDER UNE RÉSERVATION</span>
+          <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+        </button>
+      </form>
+    </div>
+    <!-- Success State -->
+    <div class="glass-concierge p-12 md:p-20 text-center hidden" id="reservationSuccess">
+      <div class="w-20 h-20 border border-secondary/50 flex items-center justify-center mx-auto mb-8 float-anim">
+        <span class="material-symbols-outlined text-secondary" style="font-size:40px;">check</span>
+      </div>
+      <h3 class="text-headline-lg font-display mb-4">Demande Reçue</h3>
+      <p class="text-on-surface-variant font-light leading-relaxed mb-8">
+        Merci. Votre demande de table a bien été reçue. Notre concierge confirmera votre réservation dans les 2 heures par e-mail.
+      </p>
+      <div class="gold-divider mb-8"></div>
+      <p class="font-label-caps text-[10px] text-secondary tracking-widest">NOUS ATTENDONS VOTRE ARRIVÉE AVEC PLAISIR</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- FOOTER                                      -->
+<!-- ═══════════════════════════════════════════ -->
+<footer class="bg-background py-24 px-8 md:px-20 border-t border-outline-variant/10">
+  <div class="max-w-[1440px] mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-start gap-16 mb-24">
+      <div class="max-w-sm">
+        <div class="text-3xl font-display tracking-[.3em] mb-6">VIENDO <span class="text-primary-container">GRILL</span></div>
+        <p class="text-on-surface-variant font-light leading-relaxed mb-8">
+          Définir le sommet de la gastronomie de précision à travers la maîtrise de la flamme vive et des pièces d'exception. Gate Village, DIFC — Dubaï.
+        </p>
+        <div class="flex gap-4">
+          <a href="#" class="w-10 h-10 border border-outline-variant/30 flex items-center justify-center hover:border-secondary transition-colors">
+            <span class="material-symbols-outlined text-on-surface/50 hover:text-secondary transition-colors" style="font-size:18px;">photo_camera</span>
+          </a>
+          <a href="#" class="w-10 h-10 border border-outline-variant/30 flex items-center justify-center hover:border-secondary transition-colors">
+            <span class="material-symbols-outlined text-on-surface/50 hover:text-secondary transition-colors" style="font-size:18px;">facebook</span>
+          </a>
+          <a href="#" class="w-10 h-10 border border-outline-variant/30 flex items-center justify-center hover:border-secondary transition-colors">
+            <span class="material-symbols-outlined text-on-surface/50 hover:text-secondary transition-colors" style="font-size:18px;">alternate_email</span>
+          </a>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16">
+        <div class="flex flex-col gap-4">
+          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2">ADRESSE</span>
+          <span class="text-on-surface/60 text-sm">Gate Village, DIFC</span>
+          <span class="text-on-surface/60 text-sm">Bâtiment 6, Rez-de-chaussée</span>
+          <span class="text-on-surface/60 text-sm">Dubaï, EAU</span>
+        </div>
+        <div class="flex flex-col gap-4">
+          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2">HORAIRES</span>
+          <span class="text-on-surface/60 text-sm">Lun – Jeu</span>
+          <span class="text-on-surface/60 text-sm">18h30 – 1h00</span>
+          <span class="text-on-surface/60 text-sm">Ven – Sam jusqu'à 2h00</span>
+        </div>
+        <div class="flex flex-col gap-4">
+          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2">DÉCOUVRIR</span>
+          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#collection">La Carte</a>
+          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#private">Dîner Privé</a>
+          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#">Dossier Presse</a>
+          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#">Cartes Cadeaux</a>
+        </div>
+        <div class="flex flex-col gap-4">
+          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2">CONTACT</span>
+          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="tel:+97140000000">+971 4 000 0000</a>
+          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="mailto:reserve@viendo.com">reserve@viendo.com</a>
+          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#">Instagram</a>
+        </div>
+      </div>
+    </div>
+    <div class="gold-divider mb-12"></div>
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+      <p class="text-[10px] text-on-surface/25 tracking-widest">© 2024 VIENDO GRILL. SOVEREIGN DINING GROUP. TOUS DROITS RÉSERVÉS.</p>
+      <div class="flex gap-8">
+        <a class="text-[10px] text-on-surface/25 hover:text-secondary transition-colors uppercase tracking-widest" href="#">Politique de Confidentialité</a>
+        <a class="text-[10px] text-on-surface/25 hover:text-secondary transition-colors uppercase tracking-widest" href="#">Conditions</a>
+        <a class="text-[10px] text-on-surface/25 hover:text-secondary transition-colors uppercase tracking-widest" href="#">Carrières</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- CART OVERLAY -->
+<div id="cartOverlay" onclick="closeCart()"></div>
+
+<!-- CART DRAWER -->
+<div id="cartDrawer">
+  <div class="flex items-center justify-between px-8 py-6 border-b border-outline-variant/20 flex-shrink-0">
+    <div>
+      <h3 class="font-display text-xl">Votre Commande</h3>
+      <p class="text-on-surface/40 text-xs font-label-caps tracking-widest mt-1">VIENDO GRILL</p>
+    </div>
+    <button onclick="closeCart()" class="w-10 h-10 flex items-center justify-center text-on-surface/60 hover:text-white transition-colors">
+      <span class="material-symbols-outlined" style="font-size:22px;">close</span>
+    </button>
+  </div>
+
+  <!-- Cart items -->
+  <div id="cartItems" class="flex-1 overflow-y-auto px-8 py-4">
+    <!-- filled by JS -->
+  </div>
+
+  <!-- Empty state -->
+  <div id="cartEmpty" class="flex-1 flex flex-col items-center justify-center gap-4 text-center px-8">
+    <span class="material-symbols-outlined text-on-surface/20" style="font-size:56px;">shopping_basket</span>
+    <p class="text-on-surface/40 font-display italic">Votre panier est vide</p>
+    <button onclick="closeCart(); document.getElementById('collection').scrollIntoView({behavior:'smooth'})"
+      class="text-secondary font-label-caps text-[11px] tracking-widest border-b border-secondary/40 pb-1 hover:border-secondary transition-colors mt-2">
+      VOIR LE MENU
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <div id="cartFooter" class="flex-shrink-0 px-8 py-6 border-t border-outline-variant/20 hidden">
+    <div class="flex justify-between items-center mb-6">
+      <span class="font-label-caps text-[11px] text-on-surface/60 tracking-widest">TOTAL</span>
+      <span class="font-display text-2xl text-secondary" id="cartTotal">0 DA</span>
+    </div>
+    <button onclick="openCheckout()"
+      class="w-full bg-primary-container text-white py-4 font-label-caps text-[11px] tracking-[.3em] hover:bg-red-700 transition-all duration-300">
+      PASSER LA COMMANDE
+    </button>
+    <button onclick="clearCart()"
+      class="w-full mt-3 text-on-surface/30 hover:text-on-surface/60 transition-colors font-label-caps text-[10px] tracking-widest py-2">
+      VIDER LE PANIER
+    </button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkoutModal">
+  <div id="checkoutBox">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-8 py-6 border-b border-outline-variant/20">
+      <div>
+        <h3 class="font-display text-xl">Finaliser la Commande</h3>
+        <p class="text-on-surface/40 text-xs font-label-caps tracking-widest mt-1">VIENDO GRILL</p>
+      </div>
+      <button onclick="closeCheckout()" class="w-10 h-10 flex items-center justify-center text-on-surface/60 hover:text-white transition-colors">
+        <span class="material-symbols-outlined" style="font-size:22px;">close</span>
+      </button>
+    </div>
+
+    <!-- Order summary -->
+    <div class="px-8 py-6 border-b border-outline-variant/10">
+      <p class="font-label-caps text-[10px] text-secondary tracking-widest mb-4">RÉCAPITULATIF</p>
+      <div id="checkoutSummary" class="space-y-2"></div>
+      <div class="flex justify-between items-center mt-5 pt-4 border-t border-outline-variant/20">
+        <span class="font-label-caps text-[11px] text-on-surface/60 tracking-widest">TOTAL</span>
+        <span class="font-display text-xl text-secondary" id="checkoutTotal">0 DA</span>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="px-8 py-6" id="checkoutForm">
+      <p class="font-label-caps text-[10px] text-secondary tracking-widest mb-6">VOS INFORMATIONS</p>
+      <div class="space-y-6">
+        <div>
+          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2">NOM COMPLET *</label>
+          <input type="text" id="coName" placeholder="Votre nom" class="form-input" required/>
+        </div>
+        <div>
+          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2">TÉLÉPHONE *</label>
+          <input type="tel" id="coPhone" placeholder="+213 …" class="form-input" required/>
+        </div>
+        <div>
+          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2">NUMÉRO DE TABLE</label>
+          <input type="text" id="coTable" placeholder="Ex: Table 7" class="form-input"/>
+        </div>
+        <div>
+          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2">REMARQUES</label>
+          <input type="text" id="coNotes" placeholder="Allergies, préférences…" class="form-input"/>
+        </div>
+      </div>
+      <button onclick="submitOrder()"
+        class="w-full mt-8 bg-primary-container text-white py-4 font-label-caps text-[11px] tracking-[.3em] hover:bg-red-700 transition-all duration-300">
+        CONFIRMER LA COMMANDE
+      </button>
+    </div>
+
+    <!-- Success state -->
+    <div class="px-8 py-16 text-center hidden" id="checkoutSuccess">
+      <div class="w-16 h-16 bg-primary-container/20 border border-primary-container/40 flex items-center justify-center mx-auto mb-6">
+        <span class="material-symbols-outlined text-primary-container" style="font-size:32px;">check</span>
+      </div>
+      <h4 class="font-display text-2xl mb-3">Commande Confirmée</h4>
+      <p class="text-on-surface/50 text-sm italic">Nous préparons votre commande. Merci de votre confiance.</p>
+      <button onclick="closeCheckout(); clearCart();"
+        class="mt-8 text-secondary font-label-caps text-[11px] tracking-widest border-b border-secondary/40 pb-1">
+        FERMER
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── PRELOADER ──────────────────────────────────────
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('preloader').classList.add('hidden');
+    document.body.classList.remove('no-scroll');
+  }, 1800);
+});
+document.body.classList.add('no-scroll');
+
+// ── CURSOR GLOW ────────────────────────────────────
+const cursorGlow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => {
+  cursorGlow.style.left = e.clientX + 'px';
+  cursorGlow.style.top = e.clientY + 'px';
+});
+
+// ── PROGRESS BAR ───────────────────────────────────
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progressBar').style.width = (window.scrollY / h * 100) + '%';
+});
+
+// ── EMBER PARTICLES ────────────────────────────────
+const canvas = document.getElementById('emberCanvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = canvas.height + 20;
+    this.size = Math.random() * 2.5 + 0.5;
+    this.speedY = Math.random() * -1.5 - 0.4;
+    this.speedX = Math.random() * 1.2 - 0.6;
+    this.life = Math.random() * 120 + 80;
+    this.opacity = Math.random() * 0.8 + 0.2;
+    this.color = Math.random() > 0.5 ? '#ff5a00' : '#c1121f';
+  }
+  update() {
+    this.y += this.speedY; this.x += this.speedX;
+    this.life--; this.opacity -= 0.004;
+    if (this.life <= 0 || this.opacity <= 0) this.reset();
+  }
+  draw() {
+    ctx.globalAlpha = this.opacity;
+    ctx.fillStyle = this.color;
+    ctx.shadowBlur = 12; ctx.shadowColor = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+function initParticles() { particles = []; for (let i = 0; i < 80; i++) particles.push(new Particle()); }
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animate);
+}
+window.addEventListener('resize', resize);
+resize(); initParticles(); animate();
+
+// ── SCROLL EFFECTS ─────────────────────────────────
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const topNav = document.getElementById('topNav');
+  const heroImg = document.getElementById('heroImg');
+  const floatingCta = document.getElementById('floatingCta');
+
+  if (scrolled > 80) {
+    topNav.classList.add('bg-background/95','backdrop-blur-xl','shadow-2xl');
+    topNav.style.height = '';
+  } else {
+    topNav.classList.remove('bg-background/95','backdrop-blur-xl','shadow-2xl');
+  }
+
+  if (heroImg) heroImg.style.transform = `scale(1.1) translateY(${scrolled * 0.3}px)`;
+
+  if (scrolled > 600) floatingCta.classList.add('visible');
+  else floatingCta.classList.remove('visible');
+});
+
+// ── REVEAL ON SCROLL ───────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => revealObserver.observe(el));
+
+// ── STAT COUNTER ───────────────────────────────────
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.getAttribute('data-target'));
+      const suffix = el.getAttribute('data-suffix') || '';
+      let current = 0;
+      const step = target / 60;
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) { current = target; clearInterval(timer); }
+        el.textContent = Math.floor(current) + suffix;
+      }, 20);
+      statObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-target]').forEach(el => statObserver.observe(el));
+
+// ── HEAT VISION ────────────────────────────────────
+const heatContainer = document.getElementById('wagyuSpotlight');
+if (heatContainer) {
+  heatContainer.addEventListener('mousemove', e => {
+    const rect = heatContainer.getBoundingClientRect();
+    heatContainer.style.setProperty('--x', ((e.clientX - rect.left) / rect.width * 100) + '%');
+    heatContainer.style.setProperty('--y', ((e.clientY - rect.top) / rect.height * 100) + '%');
+  });
+}
+
+// ── MOBILE NAV ────────────────────────────────────
+function openMobileNav() {
+  document.getElementById('mobileNav').classList.add('open');
+  document.body.classList.add('no-scroll');
+}
+function closeMobileNav() {
+  document.getElementById('mobileNav').classList.remove('open');
+  document.body.classList.remove('no-scroll');
+}
+
+// ── MENU TABS ─────────────────────────────────────
+function switchTab(name) {
+  const panels = ['grillades','chaudes','fumees','froide','poissons'];
+  document.querySelectorAll('.menu-tab').forEach((t, i) => {
+    t.classList.toggle('active', panels[i] === name);
+  });
+  document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+// ── CART ───────────────────────────────────────────
+let cart = [];
+
+function addToCart(name, price) {
+  const existing = cart.find(i => i.name === name);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ name, price, qty: 1 });
+  }
+  updateCartUI();
+  openCart();
+}
+
+function removeFromCart(name) {
+  cart = cart.filter(i => i.name !== name);
+  updateCartUI();
+}
+
+function changeQty(name, delta) {
+  const item = cart.find(i => i.name === name);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) removeFromCart(name);
+  else updateCartUI();
+}
+
+function clearCart() {
+  cart = [];
+  updateCartUI();
+}
+
+function getTotal() {
+  return cart.reduce((s, i) => s + i.price * i.qty, 0);
+}
+
+function formatPrice(n) {
+  return n.toLocaleString('fr-DZ') + ' DA';
+}
+
+function updateCartUI() {
+  const total = getTotal();
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+
+  // Badges
+  const badge = document.getElementById('cartBadge');
+  const badgeMob = document.getElementById('cartBadgeMob');
+  if (count > 0) {
+    badge.textContent = count > 99 ? '99+' : count;
+    badge.classList.add('visible');
+    badgeMob.textContent = count;
+    badgeMob.style.opacity = '1';
+    badgeMob.style.transform = 'scale(1)';
+  } else {
+    badge.classList.remove('visible');
+    badgeMob.style.opacity = '0';
+    badgeMob.style.transform = 'scale(0)';
+  }
+
+  // Total display
+  document.getElementById('cartTotal').textContent = formatPrice(total);
+
+  // Items vs empty state
+  const itemsEl = document.getElementById('cartItems');
+  const emptyEl = document.getElementById('cartEmpty');
+  const footerEl = document.getElementById('cartFooter');
+
+  if (cart.length === 0) {
+    emptyEl.style.display = 'flex';
+    itemsEl.innerHTML = '';
+    footerEl.classList.add('hidden');
+  } else {
+    emptyEl.style.display = 'none';
+    footerEl.classList.remove('hidden');
+    itemsEl.innerHTML = cart.map(item => `
+      <div class="cart-item-row">
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-display leading-snug truncate">${item.name}</p>
+          <p class="text-on-surface/40 text-xs mt-0.5">${formatPrice(item.price)} × ${item.qty}</p>
+        </div>
+        <div class="flex items-center gap-2 flex-shrink-0">
+          <button class="qty-btn" onclick="changeQty('${item.name.replace(/'/g,"\\'")}', -1)">−</button>
+          <span class="w-6 text-center text-sm">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty('${item.name.replace(/'/g,"\\'")}', 1)">+</button>
+          <span class="text-secondary font-display text-sm ml-2">${formatPrice(item.price * item.qty)}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+function openCart() {
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.body.classList.add('no-scroll');
+}
+
+function closeCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.body.classList.remove('no-scroll');
+}
+
+function openCheckout() {
+  if (cart.length === 0) return;
+  // Populate checkout summary
+  document.getElementById('checkoutSummary').innerHTML = cart.map(item => `
+    <div class="flex justify-between text-sm">
+      <span class="text-on-surface/70">${item.name} × ${item.qty}</span>
+      <span class="text-secondary font-display">${formatPrice(item.price * item.qty)}</span>
+    </div>
+  `).join('');
+  document.getElementById('checkoutTotal').textContent = formatPrice(getTotal());
+  document.getElementById('checkoutForm').classList.remove('hidden');
+  document.getElementById('checkoutSuccess').classList.add('hidden');
+  document.getElementById('checkoutModal').classList.add('open');
+  document.body.classList.add('no-scroll');
+}
+
+function closeCheckout() {
+  document.getElementById('checkoutModal').classList.remove('open');
+}
+
+function submitOrder() {
+  const name = document.getElementById('coName').value.trim();
+  const phone = document.getElementById('coPhone').value.trim();
+  if (!name || !phone) {
+    alert('Veuillez renseigner votre nom et téléphone.');
+    return;
+  }
+  document.getElementById('checkoutForm').classList.add('hidden');
+  document.getElementById('checkoutSuccess').classList.remove('hidden');
+}
+
+// Init cart UI
+updateCartUI();
+
+// ── GALLERY LIGHTBOX ──────────────────────────────
+function openLightbox(container) {
+  const img = container.querySelector('img');
+  document.getElementById('lightboxImg').src = img.src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.classList.add('no-scroll');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.classList.remove('no-scroll');
+}
+document.getElementById('lightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+});
+
+// ── RESERVATION FORM ──────────────────────────────
+function handleReservation(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtnText');
+  btn.textContent = 'SENDING…';
+  setTimeout(() => {
+    document.getElementById('reservationForm').classList.add('hidden');
+    document.getElementById('reservationSuccess').classList.remove('hidden');
+    document.getElementById('reservationSuccess').classList.add('reveal','active');
+  }, 1400);
+}
+
+// Set min date for reservation
+const dateInput = document.getElementById('resDate');
+if (dateInput) {
+  const today = new Date();
+  today.setDate(today.getDate() + 1);
+  dateInput.min = today.toISOString().split('T')[0];
+}
+
+// ── CUSTOM ANIMATIONS ─────────────────────────────
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>
