@@ -1758,15 +1758,47 @@ function closeCheckout() {
   document.getElementById('checkoutModal').classList.remove('open');
 }
 
-function submitOrder() {
-  const name = document.getElementById('coName').value.trim();
-  const phone = document.getElementById('coPhone').value.trim();
+async function sendToTelegram(text) {
+  if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE') return;
+  try {
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: 'HTML' })
+    });
+  } catch(e) { console.warn('Telegram error:', e); }
+}
+
+async function submitOrder() {
+  const name    = document.getElementById('coName').value.trim();
+  const phone   = document.getElementById('coPhone').value.trim();
+  const address = document.getElementById('coAddress').value.trim();
+  const notes   = document.getElementById('coNotes').value.trim();
   if (!name || !phone) {
-    alert('Veuillez renseigner votre nom et téléphone.');
+    alert('يرجى إدخال الاسم ورقم الهاتف.');
     return;
   }
+  const total = getTotal();
+  const items = cart.map(i => `• ${i.name} × ${i.qty} — ${(i.price * i.qty).toLocaleString()} DA`).join('\n');
+  const now   = new Date().toLocaleString('fr-DZ', { timeZone: 'Africa/Algiers' });
+  const msg =
+`🛒 <b>طلب جديد — VIENDO GRILL</b>
+📅 ${now}
+
+👤 <b>الاسم:</b> ${name}
+📞 <b>الهاتف:</b> ${phone}
+📍 <b>مكان التوصيل:</b> ${address || '—'}
+📝 <b>ملاحظة:</b> ${notes || '—'}
+
+🍽 <b>الطلبات:</b>
+${items}
+
+💰 <b>المجموع:</b> ${total.toLocaleString()} DA`;
+
+  await sendToTelegram(msg);
   document.getElementById('checkoutForm').classList.add('hidden');
   document.getElementById('checkoutSuccess').classList.remove('hidden');
+  clearCart();
 }
 
 // Init cart UI
@@ -1788,15 +1820,48 @@ document.getElementById('lightbox').addEventListener('click', e => {
 });
 
 // ── RESERVATION FORM ──────────────────────────────
-function handleReservation(e) {
+async function handleReservation(e) {
   e.preventDefault();
   const btn = document.getElementById('submitBtnText');
-  btn.textContent = 'SENDING…';
+  btn.textContent = 'ENVOI…';
+
+  const fname    = document.getElementById('fname').value.trim();
+  const lname    = document.getElementById('lname').value.trim();
+  const email    = document.getElementById('email').value.trim();
+  const phone    = document.getElementById('phone').value.trim();
+  const date     = document.getElementById('resDate').value;
+  const time     = document.getElementById('resTime').value;
+  const guests   = document.getElementById('guests').value;
+  const occasion = document.getElementById('occasion').value;
+  const requests = document.getElementById('requests').value.trim();
+  const now      = new Date().toLocaleString('fr-DZ', { timeZone: 'Africa/Algiers' });
+
+  const occasionMap = {
+    none:'—', birthday:'عيد ميلاد 🎂', anniversary:'احتفال 🥂',
+    business:'عشاء عمل 💼', proposal:'خطوبة 💍', other:'أخرى'
+  };
+
+  const msg =
+`📅 <b>حجز طاولة — VIENDO GRILL</b>
+🕐 ${now}
+
+👤 <b>الاسم:</b> ${fname} ${lname}
+📧 <b>الإيميل:</b> ${email || '—'}
+📞 <b>الهاتف:</b> ${phone || '—'}
+
+📆 <b>التاريخ:</b> ${date}
+⏰ <b>الوقت:</b> ${time}
+👥 <b>عدد الأشخاص:</b> ${guests}
+🎉 <b>المناسبة:</b> ${occasionMap[occasion] || occasion}
+📝 <b>طلبات خاصة:</b> ${requests || '—'}`;
+
+  await sendToTelegram(msg);
+
   setTimeout(() => {
     document.getElementById('reservationForm').classList.add('hidden');
     document.getElementById('reservationSuccess').classList.remove('hidden');
     document.getElementById('reservationSuccess').classList.add('reveal','active');
-  }, 1400);
+  }, 800);
 }
 
 // Set min date for reservation
