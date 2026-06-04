@@ -1459,6 +1459,14 @@ tailwind.config = {
 
   <!-- Footer -->
   <div id="cartFooter" class="flex-shrink-0 px-8 py-6 border-t border-outline-variant/20 hidden">
+    <!-- Upsell boissons -->
+    <div class="flex items-center justify-between mb-5 px-4 py-3 border border-outline-variant/20 bg-surface-container">
+      <span class="text-on-surface/60 text-xs font-body">مخصكش مشروب؟</span>
+      <button onclick="closeCart(); switchTab('boissons'); document.getElementById('collection').scrollIntoView({behavior:'smooth'})"
+        class="text-secondary font-label-caps text-[10px] tracking-widest border-b border-secondary/50 pb-0.5 hover:border-secondary transition-colors">
+        Ajouter
+      </button>
+    </div>
     <div class="flex justify-between items-center mb-6">
       <span class="font-label-caps text-[11px] text-on-surface/60 tracking-widest">TOTAL</span>
       <span class="font-display text-2xl text-secondary" id="cartTotal">0 DA</span>
@@ -1467,9 +1475,9 @@ tailwind.config = {
       class="w-full bg-primary-container text-white py-4 font-label-caps text-[11px] tracking-[.3em] hover:bg-red-700 transition-all duration-300">
       PASSER LA COMMANDE
     </button>
-    <button onclick="clearCart()"
+    <button onclick="closeCart()"
       class="w-full mt-3 text-on-surface/30 hover:text-on-surface/60 transition-colors font-label-caps text-[10px] tracking-widest py-2">
-      VIDER LE PANIER
+      Continuer les achats
     </button>
   </div>
 </div>
@@ -1799,6 +1807,9 @@ function updateCartUI() {
           <span class="w-6 text-center text-sm">${item.qty}</span>
           <button class="qty-btn" onclick="changeQty('${item.name.replace(/'/g,"\\'")}', 1)">+</button>
           <span class="text-secondary font-display text-sm ml-2">${formatPrice(item.price * item.qty)}</span>
+          <button onclick="removeFromCart('${item.name.replace(/'/g,"\\'")}'" style="margin-left:6px;opacity:0.35;transition:opacity .2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='0.35'">
+            <span class="material-symbols-outlined" style="font-size:17px;color:#e55;">delete</span>
+          </button>
         </div>
       </div>
     `).join('');
