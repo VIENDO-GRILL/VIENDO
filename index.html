@@ -419,9 +419,10 @@ tailwind.config = {
 <!-- ═══════════════════════════════════════════ -->
 <section class="relative w-full h-screen flex flex-col items-center justify-center text-center overflow-hidden" id="hero">
   <div class="absolute inset-0 z-0">
-    <img alt="Luxury Steakhouse Interior" id="heroImg"
-      class="w-full h-full object-cover brightness-[0.38] scale-110"
-      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGWkG45cMQjuL_D6qcOAa3DmYXLGKKgGgYZWBz_3kkAX143LhbhEl8zhjLUIiv1S-jJeCVGwXtqrIFBMRj3Nxje9udzrMh5a15-6M3t4WWE6eDVw9WNxD2MmutEWsJYGx7Vg3FLtoPprPIFpVnkm12PQJtYUrXzCvhtHe42-yn2VnHqTNWkKbmbetUab_K3Syj6sOJ2K8twWAHotXLoBYRAQOFLsvJGYuwDiT7WXFkIXmwh7P8iGYEwH6Ez-HJbk--K4E9hYNLebPw"/>
+    <video id="heroImg" autoplay muted loop playsinline
+      class="w-full h-full object-cover brightness-[0.45] scale-110">
+      <source src="https://res.cloudinary.com/dlazeylfu/video/upload/AQO0kGcpAPKO5HcF8DEl0y34uv_31xYE4_xHdczyGf3__zRljeHi1AbPYj5GBW1riLg_c0FDSy1hJf_czVBKKNBmQfcb01B2NEYEqns_zweoye.mp4" type="video/mp4"/>
+    </video>
     <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-background/10 to-background"></div>
   </div>
   <canvas id="emberCanvas"></canvas>
