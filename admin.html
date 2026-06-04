@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Admin — Plat du Jour · VIENDO GRILL</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --gold:#E9C349;
+    --bg:#0A0A0A;
+    --surface:#111111;
+    --border:rgba(233,195,73,.18);
+    --text:#F5F0E8;
+    --muted:rgba(245,240,232,.45);
+  }
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+  h1{font-size:1.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;text-align:center}
+  .sub{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:40px;text-align:center}
+
+  /* LOGIN */
+  #loginBox{background:var(--surface);border:1px solid var(--border);padding:40px;max-width:380px;width:100%;text-align:center}
+  #loginBox input{width:100%;background:#1a1a1a;border:1px solid var(--border);color:var(--text);padding:14px 18px;font-size:1rem;outline:none;margin-bottom:16px;letter-spacing:.1em}
+  #loginBox input:focus{border-color:var(--gold)}
+  #loginBox button{width:100%;background:var(--gold);color:#0A0A0A;border:none;padding:14px;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-weight:700}
+  #loginBox button:hover{opacity:.85}
+  #loginErr{color:#e05c5c;font-size:.75rem;margin-top:10px;display:none}
+
+  /* ADMIN PANEL */
+  #panel{display:none;width:100%;max-width:820px}
+  .panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:16px}
+  .panel-header h2{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+  .today-label{font-size:.7rem;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+
+  .dishes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-bottom:32px}
+  .dish-card{background:var(--surface);border:1px solid var(--border);padding:22px 18px;cursor:pointer;transition:border-color .2s,transform .15s;position:relative}
+  .dish-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .dish-card.active{border-color:var(--gold);background:#1a1500}
+  .dish-card.active::after{content:'✓ SÉLECTIONNÉ';position:absolute;top:10px;right:10px;font-size:.6rem;letter-spacing:.12em;color:var(--gold)}
+  .dish-num{font-size:.65rem;letter-spacing:.15em;color:var(--muted);margin-bottom:8px}
+  .dish-ar{font-size:1.25rem;color:var(--text);direction:rtl;margin-bottom:6px;font-weight:500}
+  .dish-fr{font-size:.72rem;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+
+  .save-btn{display:block;width:100%;background:var(--gold);color:#0A0A0A;border:none;padding:16px;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:opacity .2s}
+  .save-btn:hover{opacity:.85}
+  .save-btn:disabled{opacity:.4;cursor:not-allowed}
+
+  #statusMsg{text-align:center;margin-top:14px;font-size:.75rem;letter-spacing:.12em;min-height:20px}
+  #statusMsg.ok{color:#5cb85c}
+  #statusMsg.err{color:#e05c5c}
+
+  .logout{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);cursor:pointer;text-decoration:underline}
+  .logout:hover{color:var(--text)}
+
+  .current-box{background:#1a1500;border:1px solid rgba(233,195,73,.3);padding:16px 20px;margin-bottom:28px;display:flex;align-items:center;gap:16px}
+  .current-label{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);white-space:nowrap}
+  .current-dish{font-size:1rem;direction:rtl;flex:1;text-align:right}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginBox">
+  <h1>VIENDO GRILL</h1>
+  <div class="sub">Panneau d'administration</div>
+  <input type="password" id="pwdInput" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')doLogin()"/>
+  <button onclick="doLogin()">CONNEXION</button>
+  <div id="loginErr">Mot de passe incorrect</div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="panel">
+  <div class="panel-header">
+    <div>
+      <h2>PLAT DU JOUR</h2>
+      <div class="today-label" id="todayLabel"></div>
+    </div>
+    <span class="logout" onclick="logout()">Déconnexion</span>
+  </div>
+
+  <div class="current-box" id="currentBox" style="display:none">
+    <span class="current-label">Aujourd'hui :</span>
+    <span class="current-dish" id="currentDishName">—</span>
+  </div>
+
+  <div class="dishes-grid" id="dishesGrid"></div>
+
+  <button class="save-btn" id="saveBtn" onclick="savePlat()" disabled>ENREGISTRER LE PLAT DU JOUR</button>
+  <div id="statusMsg"></div>
+</div>
+
+<script src="config.js"></script>
+<script>
+const ADMIN_PASSWORD = 'viendo2026';
+
+const DISHES = [
+  { id:1, ar:'كبدة مشرملة',           fr:'Kebda Mecherrmla' },
+  { id:2, ar:'مثوم',                   fr:'Mthom' },
+  { id:3, ar:'طاجين زيتون باللحم',    fr:'Tajine Zitoune Bil Lahm' },
+  { id:4, ar:'دوارة الخروف',           fr:'Dawara Kharuf' },
+  { id:5, ar:'طاجين شطيطحة لحم',      fr:'Tajine Chtitha Lahm' },
+  { id:6, ar:'طاجين شطيطحة لسان',     fr:'Tajine Chtitha Lsan' },
+  { id:7, ar:'لوبية بالكرعين',         fr:'Loubia Bil Kra\'in' },
+  { id:8, ar:'لوبية قرينية',           fr:'Loubia Grinia' },
+  { id:9, ar:'قناوية باللحم الخروف',   fr:'Gnaouia Bil Lahm Kharuf' },
+];
+
+let selectedId = null;
+
+function doLogin(){
+  const val = document.getElementById('pwdInput').value;
+  if(val === ADMIN_PASSWORD){
+    document.getElementById('loginBox').style.display='none';
+    document.getElementById('panel').style.display='block';
+    initPanel();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+  }
+}
+
+function logout(){
+  document.getElementById('panel').style.display='none';
+  document.getElementById('loginBox').style.display='block';
+  document.getElementById('pwdInput').value='';
+}
+
+function initPanel(){
+  const now = new Date();
+  document.getElementById('todayLabel').textContent =
+    now.toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  const grid = document.getElementById('dishesGrid');
+  grid.innerHTML = '';
+  DISHES.forEach(d=>{
+    const card = document.createElement('div');
+    card.className='dish-card';
+    card.id='card-'+d.id;
+    card.innerHTML=`<div class="dish-num">${String(d.id).padStart(2,'0')}</div>
+      <div class="dish-ar">${d.ar}</div>
+      <div class="dish-fr">${d.fr}</div>`;
+    card.onclick=()=>selectDish(d.id);
+    grid.appendChild(card);
+  });
+
+  loadCurrentPlat();
+}
+
+async function loadCurrentPlat(){
+  if(JSONBIN_BIN_ID==='YOUR_BIN_ID_HERE') return;
+  try{
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`,{
+      headers:{'X-Master-Key':JSONBIN_API_KEY}
+    });
+    const j = await r.json();
+    const dish = j.record?.dish;
+    if(dish){
+      document.getElementById('currentBox').style.display='flex';
+      document.getElementById('currentDishName').textContent = dish.name_ar;
+      document.querySelector(`#card-${dish.id}`)?.classList.add('active');
+      selectedId = dish.id;
+      document.getElementById('saveBtn').disabled = false;
+    }
+  } catch(e){ console.warn('JSONBin read error',e); }
+}
+
+function selectDish(id){
+  document.querySelectorAll('.dish-card').forEach(c=>c.classList.remove('active'));
+  document.getElementById('card-'+id).classList.add('active');
+  selectedId = id;
+  document.getElementById('saveBtn').disabled = false;
+  document.getElementById('statusMsg').textContent='';
+  document.getElementById('statusMsg').className='';
+}
+
+async function savePlat(){
+  if(!selectedId) return;
+  if(JSONBIN_BIN_ID==='YOUR_BIN_ID_HERE'){
+    showStatus('Veuillez configurer config.js avec vos identifiants JSONBin.','err');
+    return;
+  }
+  const dish = DISHES.find(d=>d.id===selectedId);
+  const btn = document.getElementById('saveBtn');
+  btn.disabled=true;
+  btn.textContent='ENREGISTREMENT...';
+  try{
+    const today = new Date().toISOString().split('T')[0];
+    const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`,{
+      method:'PUT',
+      headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY},
+      body: JSON.stringify({ dish:{ id:dish.id, name_ar:dish.ar, name_fr:dish.fr, updated:today } })
+    });
+    if(r.ok){
+      document.getElementById('currentBox').style.display='flex';
+      document.getElementById('currentDishName').textContent = dish.ar;
+      showStatus('✓ Plat du jour mis à jour avec succès !','ok');
+    } else {
+      showStatus('Erreur lors de la mise à jour. Vérifiez config.js','err');
+    }
+  } catch(e){
+    showStatus('Erreur réseau. Vérifiez config.js','err');
+  }
+  btn.disabled=false;
+  btn.textContent='ENREGISTRER LE PLAT DU JOUR';
+}
+
+function showStatus(msg,type){
+  const el=document.getElementById('statusMsg');
+  el.textContent=msg;
+  el.className=type;
+}
+</script>
+</body>
+</html>
