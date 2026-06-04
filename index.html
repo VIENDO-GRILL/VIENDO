@@ -409,14 +409,14 @@ tailwind.config = {
       <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})" class="bg-primary-container text-white px-8 py-3 font-label-caps text-[11px] tracking-[.3em] hover:bg-red-700 transition-all duration-500 shadow-xl">
         EXPÉRIENCE
       </button>
-      <button onclick="openCart()" class="relative w-10 h-10 flex items-center justify-center hover:text-secondary transition-colors text-on-surface">
-        <span class="material-symbols-outlined" style="font-size:24px;">shopping_basket</span>
+      <button onclick="openCart()" class="relative w-10 h-10 flex items-center justify-center transition-colors text-on-surface">
+        <img id="cartIconDesktop" src="cart-empty.png" alt="Panier" style="width:36px;height:36px;object-fit:contain;transition:all 0.3s;"/>
         <span id="cartBadge">0</span>
       </button>
     </div>
     <div class="md:hidden flex items-center gap-4">
       <button onclick="openCart()" class="relative w-10 h-10 flex items-center justify-center text-on-surface">
-        <span class="material-symbols-outlined" style="font-size:22px;">shopping_basket</span>
+        <img id="cartIconMobile" src="cart-empty.png" alt="Panier" style="width:34px;height:34px;object-fit:contain;transition:all 0.3s;"/>
         <span id="cartBadgeMob" class="absolute -top-1 -right-1 bg-primary-container text-white rounded-full w-4 h-4 text-[9px] font-bold flex items-center justify-center opacity-0 scale-0 transition-all duration-300">0</span>
       </button>
       <button onclick="openMobileNav()" class="text-on-surface hover:text-secondary transition-colors">
@@ -1543,6 +1543,11 @@ function updateCartUI() {
   // Badges
   const badge = document.getElementById('cartBadge');
   const badgeMob = document.getElementById('cartBadgeMob');
+  const cartIconDesktop = document.getElementById('cartIconDesktop');
+  const cartIconMobile = document.getElementById('cartIconMobile');
+  const cartSrc = count > 0 ? 'cart-full.png' : 'cart-empty.png';
+  if (cartIconDesktop) cartIconDesktop.src = cartSrc;
+  if (cartIconMobile) cartIconMobile.src = cartSrc;
   if (count > 0) {
     badge.textContent = count > 99 ? '99+' : count;
     badge.classList.add('visible');
