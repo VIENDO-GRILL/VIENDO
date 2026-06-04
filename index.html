@@ -1853,7 +1853,7 @@ document.head.appendChild(style);
   }
 
   if(typeof JSONBIN_BIN_ID === 'undefined' || JSONBIN_BIN_ID === 'YOUR_BIN_ID_HERE'){
-    document.getElementById('pdj-fallback').style.display = 'block';
+    document.getElementById('platdujour').style.display = 'none';
     return;
   }
   try{
@@ -1868,10 +1868,10 @@ document.head.appendChild(style);
       document.getElementById('pdj-name-fr').textContent = dish.name_fr;
       setTimeout(revealDish, 500);
     } else {
-      document.getElementById('pdj-fallback').style.display = 'block';
+      document.getElementById('platdujour').style.display = 'none';
     }
   } catch(e){
-    document.getElementById('pdj-fallback').style.display = 'block';
+    document.getElementById('platdujour').style.display = 'none';
   }
 })();
 </script>
