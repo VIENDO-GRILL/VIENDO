@@ -1,2 +1,2 @@
 const JSONBIN_BIN_ID  = '6a21387df5f4af5e29b6cfe7';
-const JSONBIN_API_KEY = '$2a$10$MKSeXwEKffeIuWOTWEDdfeii5OJT4PCGTSKR/XamMu1gXldnsuJU2';
+const JSONBIN_API_KEY = '$2a$10$7zghd4jmf6.l4J4MutsqL.ODuw8KMzi2I9OMZY9LvES27ucCm6lYS';

@@ -362,18 +362,16 @@ async function savePlat(){
       headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY},
       body: JSON.stringify({dish:{id:dish.id,name_ar:dish.ar,name_fr:dish.fr,updated:today}})
     });
-    const respText = await r.text();
-    console.log('JSONBin PUT status:', r.status, 'body:', respText);
     if(r.ok){
       document.getElementById('currentPill').style.display = 'flex';
       document.getElementById('currentName').textContent   = dish.ar;
       setStatus('✓ Plat du jour mis à jour avec succès','ok');
     } else {
-      setStatus('Erreur ' + r.status + ': ' + respText.slice(0,80), 'err');
+      const body = await r.text();
+      setStatus('Erreur ' + r.status + ': ' + body.slice(0,80), 'err');
     }
   } catch(e){
-    console.error('JSONBin save error:', e);
-    setStatus('Erreur réseau: ' + e.message, 'err');
+    setStatus('Erreur réseau — vérifiez config.js','err');
   }
   btn.disabled = false;
   btn.textContent = 'ENREGISTRER LE PLAT DU JOUR';
