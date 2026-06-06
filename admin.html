@@ -242,7 +242,12 @@ body::before{
         <div class="selected-preview" id="selectedPreview">Aucun plat sélectionné</div>
         <div class="status-msg" id="statusMsg"></div>
       </div>
-      <div style="display:flex;gap:12px;align-items:center">
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:8px;background:#111;border:1px solid rgba(233,195,73,.2);padding:0 12px;height:44px;border-radius:2px">
+          <label style="font-size:10px;letter-spacing:.15em;color:rgba(233,195,73,.6);white-space:nowrap">السعر (DA)</label>
+          <input type="number" id="pdjPrice" min="0" step="50" value="0"
+            style="width:90px;background:transparent;border:none;outline:none;color:#F5F0E8;font-size:16px;font-family:Georgia,serif;text-align:center"/>
+        </div>
         <button class="clear-btn" id="clearBtn" onclick="clearPlat()">
           ✕ &nbsp;يوم بدون طبق
         </button>
@@ -334,6 +339,7 @@ async function loadCurrentPlat(){
       document.getElementById('currentName').textContent   = dish.name_ar;
       document.getElementById('card-'+dish.id)?.classList.add('active');
       selectedId = dish.id;
+      if(dish.price) document.getElementById('pdjPrice').value = dish.price;
       updatePreview(dish);
       document.getElementById('saveBtn').disabled = false;
     }
@@ -371,7 +377,7 @@ async function savePlat(){
     const r = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`,{
       method:'PUT',
       headers:{'Content-Type':'application/json','X-Master-Key':JSONBIN_API_KEY},
-      body: JSON.stringify({dish:{id:dish.id,name_ar:dish.ar,name_fr:dish.fr,updated:today}})
+      body: JSON.stringify({dish:{id:dish.id,name_ar:dish.ar,name_fr:dish.fr,price:parseInt(document.getElementById('pdjPrice').value)||0,updated:today}})
     });
     if(r.ok){
       document.getElementById('currentPill').style.display = 'flex';

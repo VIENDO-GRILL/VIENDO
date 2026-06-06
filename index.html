@@ -576,6 +576,35 @@ tailwind.config = {
           opacity:0;
           transition:opacity .9s ease .3s;
         ">—</div>
+
+      <!-- ORDER BUTTON -->
+      <div id="pdj-order-wrap" style="margin-top:28px;opacity:0;transition:opacity .9s ease .5s">
+        <button id="pdj-order-btn"
+          onclick="orderPlatDuJour()"
+          style="
+            background:transparent;
+            border:1px solid rgba(233,195,73,.5);
+            color:#E9C349;
+            font-family:'Courier New',monospace;
+            font-size:10px;
+            letter-spacing:.35em;
+            text-transform:uppercase;
+            padding:14px 36px;
+            cursor:pointer;
+            transition:all .3s;
+            position:relative;
+            overflow:hidden;
+          "
+          onmouseover="this.style.background='rgba(233,195,73,.1)';this.style.borderColor='rgba(233,195,73,.9)'"
+          onmouseout="this.style.background='transparent';this.style.borderColor='rgba(233,195,73,.5)'">
+          <span style="display:flex;align-items:center;gap:10px">
+            <span id="pdj-btn-ar">اطلب الطبق</span>
+            <span style="opacity:.5">—</span>
+            <span>COMMANDER</span>
+            <span id="pdj-btn-price" style="opacity:.7"></span>
+          </span>
+        </button>
+      </div>
     </div>
 
     <!-- RIGHT: countdown -->
@@ -2147,8 +2176,10 @@ document.head.appendChild(style);
   function revealDish(){
     const ar = document.getElementById('pdj-name-ar');
     const fr = document.getElementById('pdj-name-fr');
+    const wrap = document.getElementById('pdj-order-wrap');
     if(ar){ ar.style.opacity='1'; ar.style.transform='translateY(0)'; }
     if(fr){ fr.style.opacity='1'; }
+    if(wrap){ wrap.style.opacity='1'; }
   }
 
   if(typeof JSONBIN_BIN_ID === 'undefined' || JSONBIN_BIN_ID === 'YOUR_BIN_ID_HERE'){
@@ -2163,8 +2194,12 @@ document.head.appendChild(style);
     const j = await r.json();
     const dish = j.record?.dish;
     if(dish){
+      window._pdjDish = dish;
       document.getElementById('pdj-name-ar').textContent = dish.name_ar;
       document.getElementById('pdj-name-fr').textContent = dish.name_fr;
+      if(dish.price){
+        document.getElementById('pdj-btn-price').textContent = '— ' + dish.price.toLocaleString() + ' DA';
+      }
       setTimeout(revealDish, 500);
     } else {
       document.getElementById('platdujour').style.display = 'none';
@@ -2173,6 +2208,14 @@ document.head.appendChild(style);
     document.getElementById('platdujour').style.display = 'none';
   }
 })();
+
+function orderPlatDuJour(){
+  const dish = window._pdjDish;
+  if(!dish) return;
+  const name = dish.name_ar + (dish.name_fr ? ' — ' + dish.name_fr : '') + ' (طبق اليوم)';
+  const price = dish.price || 0;
+  addToCart(name, price);
+}
 </script>
 </body>
 </html>
