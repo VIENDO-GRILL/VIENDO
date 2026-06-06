@@ -1784,10 +1784,11 @@ function clearCart() {
 }
 
 function getTotal() {
-  return cart.reduce((s, i) => s + i.price * i.qty, 0);
+  return cart.reduce((s, i) => s + (i.price != null ? i.price * i.qty : 0), 0);
 }
 
 function formatPrice(n) {
+  if(n === null || n === undefined) return 'Sur demande';
   return n.toLocaleString('fr-DZ') + ' DA';
 }
 
@@ -1840,7 +1841,7 @@ function updateCartUI() {
           <button class="qty-btn" onclick="changeQty('${item.name.replace(/'/g,"\\'")}', -1)">−</button>
           <span class="w-6 text-center text-sm">${item.qty}</span>
           <button class="qty-btn" onclick="changeQty('${item.name.replace(/'/g,"\\'")}', 1)">+</button>
-          <span class="text-secondary font-display text-sm ml-2">${formatPrice(item.price * item.qty)}</span>
+          <span class="text-secondary font-display text-sm ml-2">${item.price != null ? formatPrice(item.price * item.qty) : 'Sur demande'}</span>
           <button onclick="removeFromCart('${item.name.replace(/'/g,"\\'")}'" style="margin-left:6px;opacity:0.35;transition:opacity .2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='0.35'">
             <span class="material-symbols-outlined" style="font-size:17px;color:#e55;">delete</span>
           </button>
@@ -1868,7 +1869,7 @@ function openCheckout() {
   document.getElementById('checkoutSummary').innerHTML = cart.map(item => `
     <div class="flex justify-between text-sm">
       <span class="text-on-surface/70">${item.name} × ${item.qty}</span>
-      <span class="text-secondary font-display">${formatPrice(item.price * item.qty)}</span>
+      <span class="text-secondary font-display">${item.price != null ? formatPrice(item.price * item.qty) : 'Sur demande'}</span>
     </div>
   `).join('');
   document.getElementById('checkoutTotal').textContent = formatPrice(getTotal());
@@ -1970,7 +1971,6 @@ const i18n = {
     'cta-btn':'احجز','nav-reserver':'احجز','nav-carte':'القائمة','nav-foyer':'الموقد',
     'nav-prive':'خاص','nav-exp':'تجربة','mnav-carte':'القائمة','mnav-foyer':'الموقد',
     'mnav-prive':'عشاء خاص','mnav-reserver':'احجز طاولة',
-    'hero-tag':'تأسس 2022 · بسكرة','hero-sub':'فن اللهب الحي',
     'hero-cmd':'اطلب الآن','hero-book':'احجز طاولتك','hero-scroll':'تمرير',
     'stat-1':'يوم نضوج','stat-2':'فهرنهايت للشواء',
     'stat-3':'مرجع مشروب','stat-4':'تكريم ميشلان',
@@ -2033,12 +2033,10 @@ function toggleLang() {
     el.textContent = t(el.dataset.i18nOpt);
   });
 
-  // Hero title (has inner HTML with span)
+  // Hero title — always French
   const heroTitle = document.getElementById('heroTitle');
   if (heroTitle) {
-    heroTitle.innerHTML = isAr
-      ? 'حين يلتقي النار <br/><span class="gold-shimmer">بالكمال</span>'
-      : 'Quand le Feu Rencontre <br/><span class="gold-shimmer">la Perfection</span>';
+    heroTitle.innerHTML = 'Quand le Feu Rencontre <br/><span class="gold-shimmer">la Perfection</span>';
   }
 
   // Philosophy title (has inner HTML)
@@ -2216,7 +2214,7 @@ function orderPlatDuJour(){
   const dish = window._pdjDish;
   if(!dish) return;
   const name = dish.name_ar + (dish.name_fr ? ' — ' + dish.name_fr : '') + ' (طبق اليوم)';
-  const price = dish.price || 0;
+  const price = dish.price > 0 ? dish.price : null;
   addToCart(name, price);
 }
 </script>
