@@ -372,7 +372,7 @@ tailwind.config = {
 <div id="floatingCta">
   <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})" class="bg-primary-container text-white px-6 py-4 font-label-caps text-[11px] tracking-[.3em] shadow-2xl hover:bg-red-700 transition-all flex items-center gap-3" style="animation:pulse-gold 3s ease-in-out infinite;">
     <span class="material-symbols-outlined text-lg" style="font-size:18px;">restaurant</span>
-    RÉSERVER
+    <span data-i18n="cta-btn">RÉSERVER</span>
   </button>
 </div>
 
@@ -386,11 +386,12 @@ tailwind.config = {
       </button>
     </div>
     <nav class="flex flex-col gap-10 flex-1">
-      <a href="#collection" onclick="closeMobileNav()" class="text-4xl font-display text-on-surface/80 hover:text-secondary transition-colors border-b border-outline-variant/10 pb-10">La Carte</a>
-      <a href="#hearth" onclick="closeMobileNav()" class="text-4xl font-display text-on-surface/80 hover:text-secondary transition-colors border-b border-outline-variant/10 pb-10">Le Foyer</a>
-      <a href="#private" onclick="closeMobileNav()" class="text-4xl font-display text-on-surface/80 hover:text-secondary transition-colors border-b border-outline-variant/10 pb-10">Dîner Privé</a>
-      <a href="#reservation" onclick="closeMobileNav()" class="text-4xl font-display text-secondary">Réserver une Table</a>
+      <a href="#collection" onclick="closeMobileNav()" class="text-4xl font-display text-on-surface/80 hover:text-secondary transition-colors border-b border-outline-variant/10 pb-10" data-i18n="mnav-carte">La Carte</a>
+      <a href="#hearth" onclick="closeMobileNav()" class="text-4xl font-display text-on-surface/80 hover:text-secondary transition-colors border-b border-outline-variant/10 pb-10" data-i18n="mnav-foyer">Le Foyer</a>
+      <a href="#private" onclick="closeMobileNav()" class="text-4xl font-display text-on-surface/80 hover:text-secondary transition-colors border-b border-outline-variant/10 pb-10" data-i18n="mnav-prive">Dîner Privé</a>
+      <a href="#reservation" onclick="closeMobileNav()" class="text-4xl font-display text-secondary" data-i18n="mnav-reserver">Réserver une Table</a>
     </nav>
+    <button onclick="toggleLang()" class="lang-btn mt-6 text-secondary font-label-caps text-[11px] tracking-widest border border-secondary/40 px-4 py-2 hover:bg-secondary/10 transition-colors self-start">AR</button>
     <div class="mt-auto pt-12 border-t border-outline-variant/10">
       <p class="text-on-surface/40 text-sm tracking-widest">Biskra, Algérie</p>
       <p class="text-on-surface/40 text-sm mt-2 tracking-widest">0791071217</p>
@@ -405,13 +406,14 @@ tailwind.config = {
       VIENDO <span class="text-primary-container">GRILL</span>
     </a>
     <div class="hidden md:flex gap-10 items-center">
-      <a href="#" class="text-secondary font-label-caps text-label-caps border-b border-secondary/50 pb-1">RÉSERVER</a>
-      <a href="#collection" class="text-on-surface/70 hover:text-white transition-colors font-label-caps text-label-caps uppercase">La Carte</a>
-      <a href="#hearth" class="text-on-surface/70 hover:text-white transition-colors font-label-caps text-label-caps uppercase">Le Foyer</a>
-      <a href="#private" class="text-on-surface/70 hover:text-white transition-colors font-label-caps text-label-caps uppercase">Privé</a>
+      <a href="#" class="text-secondary font-label-caps text-label-caps border-b border-secondary/50 pb-1" data-i18n="nav-reserver">RÉSERVER</a>
+      <a href="#collection" class="text-on-surface/70 hover:text-white transition-colors font-label-caps text-label-caps uppercase" data-i18n="nav-carte">La Carte</a>
+      <a href="#hearth" class="text-on-surface/70 hover:text-white transition-colors font-label-caps text-label-caps uppercase" data-i18n="nav-foyer">Le Foyer</a>
+      <a href="#private" class="text-on-surface/70 hover:text-white transition-colors font-label-caps text-label-caps uppercase" data-i18n="nav-prive">Privé</a>
       <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})" class="bg-primary-container text-white px-8 py-3 font-label-caps text-[11px] tracking-[.3em] hover:bg-red-700 transition-all duration-500 shadow-xl">
-        EXPÉRIENCE
+        <span data-i18n="nav-exp">EXPÉRIENCE</span>
       </button>
+      <button onclick="toggleLang()" class="lang-btn text-secondary font-label-caps text-[11px] tracking-widest border border-secondary/40 px-3 py-1.5 hover:bg-secondary/10 transition-colors">AR</button>
       <button onclick="openCart()" class="relative flex items-center justify-center transition-colors text-on-surface" style="width:130px;height:130px;">
         <img id="cartIconDesktop" src="cart-empty.png" alt="Panier" style="width:130px;height:130px;object-fit:contain;transition:all 0.3s;filter:drop-shadow(0 0 8px rgba(233,195,73,0.4));"/>
         <span id="cartBadge" style="top:8px;right:8px;">0</span>
@@ -443,29 +445,29 @@ tailwind.config = {
   <canvas id="emberCanvas"></canvas>
   <div class="relative z-20 flex flex-col items-center px-4 max-w-5xl">
     <div class="mb-8 opacity-0 animate-[fadeIn_2s_ease-out_1.8s_forwards]">
-      <span class="text-secondary font-label-caps text-label-caps tracking-[.5em] uppercase">Est. 2022 &bull; Biskra</span>
+      <span class="text-secondary font-label-caps text-label-caps tracking-[.5em] uppercase" data-i18n="hero-tag">Est. 2022 &bull; Biskra</span>
     </div>
-    <h1 class="text-display-lg font-display text-on-surface mb-6 hero-title opacity-0 animate-[slideUp_1.5s_ease-out_2s_forwards]">
+    <h1 class="text-display-lg font-display text-on-surface mb-6 hero-title opacity-0 animate-[slideUp_1.5s_ease-out_2s_forwards]" id="heroTitle">
       Quand le Feu Rencontre <br/><span class="gold-shimmer">la Perfection</span>
     </h1>
-    <p class="text-xl md:text-2xl font-display text-on-surface/70 italic mb-14 opacity-0 animate-[fadeIn_2s_ease-out_2.4s_forwards]">
+    <p class="text-xl md:text-2xl font-display text-on-surface/70 italic mb-14 opacity-0 animate-[fadeIn_2s_ease-out_2.4s_forwards]" data-i18n="hero-sub">
       L'Art Souverain de la Flamme Vive
     </p>
     <div class="flex flex-col md:flex-row gap-6 opacity-0 animate-[fadeIn_2s_ease-out_2.8s_forwards]">
       <button onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})"
         class="group relative bg-primary-container text-white px-14 py-5 font-label-caps text-label-caps overflow-hidden">
-        <span class="relative z-10">COMMANDER MAINTENANT</span>
+        <span class="relative z-10" data-i18n="hero-cmd">COMMANDER MAINTENANT</span>
         <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
       </button>
       <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})"
-        class="group border border-secondary/40 text-secondary px-14 py-5 font-label-caps text-label-caps hover:bg-secondary hover:text-on-secondary transition-all">
+        class="group border border-secondary/40 text-secondary px-14 py-5 font-label-caps text-label-caps hover:bg-secondary hover:text-on-secondary transition-all" data-i18n="hero-book">
         BOOK AN EXPERIENCE - احجز طاولة
       </button>
     </div>
   </div>
   <!-- Scroll indicator -->
   <div class="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-4 opacity-50">
-    <span class="font-label-caps text-[10px] tracking-widest">DÉFILER</span>
+    <span class="font-label-caps text-[10px] tracking-widest" data-i18n="hero-scroll">DÉFILER</span>
     <div class="w-px h-16 bg-gradient-to-b from-secondary to-transparent"></div>
   </div>
 </section>
@@ -477,19 +479,19 @@ tailwind.config = {
   <div class="max-w-[1440px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 text-center reveal">
     <div>
       <div class="stat-num" data-target="45">0</div>
-      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2">JOURS D'AFFINAGE</div>
+      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2" data-i18n="stat-1">JOURS D'AFFINAGE</div>
     </div>
     <div>
       <div class="stat-num" data-target="1200" data-suffix="°">0</div>
-      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2">FAHRENHEIT DE SAISIE</div>
+      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2" data-i18n="stat-2">FAHRENHEIT DE SAISIE</div>
     </div>
     <div>
       <div class="stat-num" data-target="180" data-suffix="+">0</div>
-      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2">RÉFÉRENCES DE CAVE</div>
+      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2" data-i18n="stat-3">RÉFÉRENCES DE CAVE</div>
     </div>
     <div>
       <div class="stat-num" data-target="5">0</div>
-      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2">RECONNAISSANCE MICHELIN</div>
+      <div class="text-[10px] font-label-caps tracking-widest text-on-surface/50 mt-2" data-i18n="stat-4">RECONNAISSANCE MICHELIN</div>
     </div>
   </div>
 </section>
@@ -631,12 +633,12 @@ tailwind.config = {
 
     <!-- Menu Tabs -->
     <div class="flex gap-0 overflow-x-auto border-b border-outline-variant/20 mb-16 reveal" id="menuTabs">
-      <button class="menu-tab active" onclick="switchTab('grillades')">GRILLADES</button>
-      <button class="menu-tab" onclick="switchTab('chaudes')">ENTRÉES CHAUDES</button>
-      <button class="menu-tab" onclick="switchTab('fumees')">VIANDES FUMÉES</button>
-      <button class="menu-tab" onclick="switchTab('froide')">ENTRÉE FROIDE</button>
-      <button class="menu-tab" onclick="switchTab('poissons')">POISSONS</button>
-      <button class="menu-tab" onclick="switchTab('boissons')">BOISSONS</button>
+      <button class="menu-tab active" onclick="switchTab('grillades')" data-i18n="tab-grillades">GRILLADES</button>
+      <button class="menu-tab" onclick="switchTab('chaudes')" data-i18n="tab-chaudes">ENTRÉES CHAUDES</button>
+      <button class="menu-tab" onclick="switchTab('fumees')" data-i18n="tab-fumees">VIANDES FUMÉES</button>
+      <button class="menu-tab" onclick="switchTab('froide')" data-i18n="tab-froide">ENTRÉE FROIDE</button>
+      <button class="menu-tab" onclick="switchTab('poissons')" data-i18n="tab-poissons">POISSONS</button>
+      <button class="menu-tab" onclick="switchTab('boissons')" data-i18n="tab-boissons">BOISSONS</button>
     </div>
 
     <!-- GRILLADES PANEL -->
@@ -1042,8 +1044,8 @@ tailwind.config = {
 <section class="relative py-40 px-8 md:px-20 bg-background overflow-hidden" id="hearth">
   <div class="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
     <div class="reveal-left">
-      <h2 class="font-label-caps text-secondary mb-6">LA PHILOSOPHIE</h2>
-      <h3 class="text-headline-lg font-display mb-10 leading-tight">La Maîtrise <br/>du Feu Vif</h3>
+      <h2 class="font-label-caps text-secondary mb-6" data-i18n="philo-lbl">LA PHILOSOPHIE</h2>
+      <h3 class="text-headline-lg font-display mb-10 leading-tight" id="philoTitle">La Maîtrise <br/>du Feu Vif</h3>
       <div class="space-y-7 text-on-surface-variant text-lg leading-relaxed font-light">
         <p>Chez VIENDO GRILL, nous ne cuisinons pas — nous orchestrons un dialogue entre des éléments ancestraux. Notre foyer est l'âme du restaurant, où des charbons de chêne blanc et de mesquite sont sélectionnés chaque jour pour créer une architecture thermique parfaite.</p>
         <p>Chaque pièce est un témoignage de patience, affinée pendant 45 jours dans notre chambre climatisée, permettant aux saveurs de se développer en quelque chose de véritablement profond. C'est une gastronomie de haute précision pour les rares connaisseurs.</p>
@@ -1062,7 +1064,7 @@ tailwind.config = {
       <div class="gold-divider my-14"></div>
       <button onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})"
         class="group flex items-center gap-4 text-secondary font-label-caps text-label-caps hover:gap-6 transition-all">
-        EXPLORER LA CARTE
+        <span data-i18n="philo-explore">EXPLORER LA CARTE</span>
         <span class="material-symbols-outlined text-base" style="font-size:18px;">arrow_forward</span>
       </button>
     </div>
@@ -1084,7 +1086,7 @@ tailwind.config = {
   <div class="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
     <div class="relative reveal-left">
       <div class="absolute -top-8 -left-8 text-[180px] font-display text-white/[0.03] leading-none select-none pointer-events-none">V</div>
-      <h2 class="font-label-caps text-secondary mb-6">LE CHEF</h2>
+      <h2 class="font-label-caps text-secondary mb-6" data-i18n="chef-lbl">LE CHEF</h2>
       <p class="text-on-surface-variant text-lg font-light leading-relaxed mb-8">
         Formé dans trois cuisines étoilées au Guide Michelin à Paris, Tokyo et New York, le Chef Marcus incarne une philosophie de retenue et de précision. Chaque plat est réduit à sa vérité essentielle — le meilleur ingrédient, la température parfaite, le moment exact.
       </p>
@@ -1193,8 +1195,8 @@ tailwind.config = {
         </div>
       </div>
       <div class="reveal-left order-1 lg:order-2">
-        <h2 class="font-label-caps text-secondary mb-6">EXPÉRIENCES EXCLUSIVES</h2>
-        <h3 class="text-headline-lg font-display mb-10 leading-tight">Les Salons <br/>Privés</h3>
+        <h2 class="font-label-caps text-secondary mb-6" data-i18n="private-lbl">EXPÉRIENCES EXCLUSIVES</h2>
+        <h3 class="text-headline-lg font-display mb-10 leading-tight" id="privateTitle">Les Salons <br/>Privés</h3>
         <p class="text-on-surface-variant text-lg font-light leading-relaxed mb-10">
           Pour ceux qui exigent une intimité absolue, VIENDO GRILL propose quatre salons privés. Chaque espace est une déclaration — art sélectionné à la main, vaisselle sur mesure, et un concierge dédié qui anticipe chaque désir avant qu'il ne soit exprimé.
         </p>
@@ -1223,7 +1225,7 @@ tailwind.config = {
         </div>
         <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})"
           class="border border-secondary/50 text-secondary px-12 py-5 font-label-caps text-label-caps hover:bg-secondary hover:text-on-secondary transition-all">
-          NOUS CONTACTER
+          <span data-i18n="private-contact">NOUS CONTACTER</span>
         </button>
       </div>
     </div>
@@ -1261,38 +1263,38 @@ tailwind.config = {
   <div class="max-w-3xl mx-auto px-8 relative z-10">
     <div class="glass-concierge p-12 md:p-20 reveal" id="reservationForm">
       <div class="text-center mb-16">
-        <h2 class="font-label-caps text-secondary mb-4">CONCIERGERIE DIGITALE</h2>
-        <h3 class="text-headline-lg font-display mb-4">Demander une Table</h3>
-        <p class="text-on-surface-variant font-light tracking-[.1em]">Un membre de notre équipe confirmera dans les 2 heures.</p>
+        <h2 class="font-label-caps text-secondary mb-4" data-i18n="res-lbl">CONCIERGERIE DIGITALE</h2>
+        <h3 class="text-headline-lg font-display mb-4" data-i18n="res-title">Demander une Table</h3>
+        <p class="text-on-surface-variant font-light tracking-[.1em]" data-i18n="res-sub">Un membre de notre équipe confirmera dans les 2 heures.</p>
       </div>
       <form onsubmit="handleReservation(event)" class="space-y-10">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div class="text-left">
-            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">PRÉNOM</label>
-            <input type="text" required placeholder="Votre prénom" class="form-input" id="fname"/>
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold" data-i18n="lbl-prenom">PRÉNOM</label>
+            <input type="text" required placeholder="Votre prénom" class="form-input" id="fname" data-i18n-ph="ph-prenom"/>
           </div>
           <div class="text-left">
-            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">NOM</label>
-            <input type="text" required placeholder="Votre nom" class="form-input" id="lname"/>
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold" data-i18n="lbl-nom">NOM</label>
+            <input type="text" required placeholder="Votre nom" class="form-input" id="lname" data-i18n-ph="ph-nom"/>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div class="text-left">
-            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">E-MAIL</label>
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold" data-i18n="lbl-email">E-MAIL</label>
             <input type="email" required placeholder="votre@email.com" class="form-input" id="email"/>
           </div>
           <div class="text-left">
-            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">TÉLÉPHONE</label>
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold" data-i18n="lbl-tel">TÉLÉPHONE</label>
             <input type="tel" placeholder="0XXXXXXXX" class="form-input" id="phone"/>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div class="text-left">
-            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">DATE</label>
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold" data-i18n="lbl-date">DATE</label>
             <input type="date" required class="form-input" id="resDate"/>
           </div>
           <div class="text-left">
-            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">HEURE</label>
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold" data-i18n="lbl-heure">HEURE</label>
             <select class="form-select" id="resTime">
               <option value="19:00">7:00 PM</option>
               <option value="19:30">7:30 PM</option>
@@ -1306,36 +1308,36 @@ tailwind.config = {
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div class="text-left">
-            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">CONVIVES</label>
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold" data-i18n="lbl-convives">CONVIVES</label>
             <select class="form-select" id="guests">
-              <option value="1">1 Convive</option>
+              <option value="1" data-i18n-opt="opt-1conv">1 Convive</option>
               <option value="2" selected>2 Convives</option>
               <option value="3">3 Convives</option>
               <option value="4">4 Convives</option>
               <option value="5">5 Convives</option>
               <option value="6">6 Convives</option>
-              <option value="7+">7+ — Dîner Privé</option>
+              <option value="7+" data-i18n-opt="opt-7plus">7+ — Dîner Privé</option>
             </select>
           </div>
           <div class="text-left">
-            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">OCCASION</label>
+            <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold" data-i18n="lbl-occasion">OCCASION</label>
             <select class="form-select" id="occasion">
-              <option value="none">Aucune occasion particulière</option>
-              <option value="birthday">Anniversaire</option>
-              <option value="anniversary">Célébration</option>
-              <option value="business">Dîner d'affaires</option>
-              <option value="proposal">Demande en mariage</option>
-              <option value="other">Autre</option>
+              <option value="none" data-i18n-opt="opt-none">Aucune occasion particulière</option>
+              <option value="birthday" data-i18n-opt="opt-birthday">Anniversaire</option>
+              <option value="anniversary" data-i18n-opt="opt-anniversary">Célébration</option>
+              <option value="business" data-i18n-opt="opt-business">Dîner d'affaires</option>
+              <option value="proposal" data-i18n-opt="opt-proposal">Demande en mariage</option>
+              <option value="other" data-i18n-opt="opt-other">Autre</option>
             </select>
           </div>
         </div>
         <div class="text-left">
-          <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold">DEMANDES PARTICULIÈRES</label>
-          <input type="text" placeholder="Régimes alimentaires, préférences ou notes…" class="form-input" id="requests"/>
+          <label class="block text-[10px] text-secondary tracking-widest mb-3 font-bold" data-i18n="lbl-requests">DEMANDES PARTICULIÈRES</label>
+          <input type="text" placeholder="Régimes alimentaires, préférences ou notes…" class="form-input" id="requests" data-i18n-ph="ph-requests"/>
         </div>
         <button type="submit"
           class="w-full bg-primary-container text-white py-6 font-label-caps text-label-caps tracking-[.4em] hover:bg-red-700 transition-all shadow-2xl relative overflow-hidden group">
-          <span class="relative z-10" id="submitBtnText">DEMANDER UNE RÉSERVATION</span>
+          <span class="relative z-10" id="submitBtnText" data-i18n="btn-reserve">DEMANDER UNE RÉSERVATION</span>
           <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
         </button>
       </form>
@@ -1345,12 +1347,12 @@ tailwind.config = {
       <div class="w-20 h-20 border border-secondary/50 flex items-center justify-center mx-auto mb-8 float-anim">
         <span class="material-symbols-outlined text-secondary" style="font-size:40px;">check</span>
       </div>
-      <h3 class="text-headline-lg font-display mb-4">Demande Reçue</h3>
-      <p class="text-on-surface-variant font-light leading-relaxed mb-8">
+      <h3 class="text-headline-lg font-display mb-4" data-i18n="res-success-title">Demande Reçue</h3>
+      <p class="text-on-surface-variant font-light leading-relaxed mb-8" data-i18n="res-success-body">
         Merci. Votre demande de table a bien été reçue. Notre concierge confirmera votre réservation dans les 2 heures par e-mail.
       </p>
       <div class="gold-divider mb-8"></div>
-      <p class="font-label-caps text-[10px] text-secondary tracking-widest">NOUS ATTENDONS VOTRE ARRIVÉE AVEC PLAISIR</p>
+      <p class="font-label-caps text-[10px] text-secondary tracking-widest" data-i18n="res-success-tag">NOUS ATTENDONS VOTRE ARRIVÉE AVEC PLAISIR</p>
     </div>
   </div>
 </section>
@@ -1383,31 +1385,31 @@ tailwind.config = {
       </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-16">
         <div class="flex flex-col gap-4">
-          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2">ADRESSE</span>
+          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2" data-i18n="footer-adresse">ADRESSE</span>
           <a href="https://maps.app.goo.gl/Apy5563sq83N31b66" target="_blank" class="text-on-surface/60 hover:text-white transition-colors text-sm">En face hotel</a>
           <a href="https://maps.app.goo.gl/Apy5563sq83N31b66" target="_blank" class="text-on-surface/60 hover:text-white transition-colors text-sm">Bab El Sahra</a>
         </div>
         <div class="flex flex-col gap-4">
-          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2">HORAIRES</span>
+          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2" data-i18n="footer-horaires">HORAIRES</span>
           <div class="flex flex-col gap-1">
-            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40">Jeu</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
-            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40">Ven</span><span class="text-on-surface/60">18:00 – 23:00</span></div>
-            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40">Sam</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
-            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40">Dim</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
-            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40">Lun</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
-            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40">Mar</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
-            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40">Mer</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
+            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40" data-i18n="day-jeu">Jeu</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
+            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40" data-i18n="day-ven">Ven</span><span class="text-on-surface/60">18:00 – 23:00</span></div>
+            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40" data-i18n="day-sam">Sam</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
+            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40" data-i18n="day-dim">Dim</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
+            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40" data-i18n="day-lun">Lun</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
+            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40" data-i18n="day-mar">Mar</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
+            <div class="flex justify-between gap-4 text-sm"><span class="text-on-surface/40" data-i18n="day-mer">Mer</span><span class="text-on-surface/60">11:00 – 23:00</span></div>
           </div>
         </div>
         <div class="flex flex-col gap-4">
-          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2">DÉCOUVRIR</span>
-          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#collection">La Carte</a>
-          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#private">Dîner Privé</a>
-          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#">Dossier Presse</a>
-          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#">Cartes Cadeaux</a>
+          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2" data-i18n="footer-decouvrir">DÉCOUVRIR</span>
+          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#collection" data-i18n="footer-carte">La Carte</a>
+          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#private" data-i18n="footer-prive">Dîner Privé</a>
+          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#" data-i18n="footer-presse">Dossier Presse</a>
+          <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="#" data-i18n="footer-cadeaux">Cartes Cadeaux</a>
         </div>
         <div class="flex flex-col gap-4">
-          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2">CONTACT</span>
+          <span class="font-label-caps text-[10px] text-secondary tracking-widest mb-2" data-i18n="footer-contact">CONTACT</span>
           <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="tel:0791071217">0791071217</a>
           <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="https://www.instagram.com/viendo_grill/" target="_blank">Instagram</a>
           <a class="text-on-surface/60 hover:text-white transition-colors text-sm" href="https://www.facebook.com/p/%D9%85%D8%B4%D9%88%D9%8A%D8%A7%D8%AA-viendo-100088397143017/" target="_blank">Facebook</a>
@@ -1417,11 +1419,11 @@ tailwind.config = {
     </div>
     <div class="gold-divider mb-12"></div>
     <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-      <p class="text-[10px] text-on-surface/25 tracking-widest">© 2022 VIENDO GRILL. BISKRA, ALGÉRIE. TOUS DROITS RÉSERVÉS.</p>
+      <p class="text-[10px] text-on-surface/25 tracking-widest" data-i18n="footer-copy">© 2022 VIENDO GRILL. BISKRA, ALGÉRIE. TOUS DROITS RÉSERVÉS.</p>
       <div class="flex gap-8">
-        <a class="text-[10px] text-on-surface/25 hover:text-secondary transition-colors uppercase tracking-widest" href="#">Politique de Confidentialité</a>
-        <a class="text-[10px] text-on-surface/25 hover:text-secondary transition-colors uppercase tracking-widest" href="#">Conditions</a>
-        <a class="text-[10px] text-on-surface/25 hover:text-secondary transition-colors uppercase tracking-widest" href="#">Carrières</a>
+        <a class="text-[10px] text-on-surface/25 hover:text-secondary transition-colors uppercase tracking-widest" href="#" data-i18n="footer-privacy">Politique de Confidentialité</a>
+        <a class="text-[10px] text-on-surface/25 hover:text-secondary transition-colors uppercase tracking-widest" href="#" data-i18n="footer-cond">Conditions</a>
+        <a class="text-[10px] text-on-surface/25 hover:text-secondary transition-colors uppercase tracking-widest" href="#" data-i18n="footer-career">Carrières</a>
       </div>
     </div>
   </div>
@@ -1434,7 +1436,7 @@ tailwind.config = {
 <div id="cartDrawer">
   <div class="flex items-center justify-between px-8 py-6 border-b border-outline-variant/20 flex-shrink-0">
     <div>
-      <h3 class="font-display text-xl">Votre Commande</h3>
+      <h3 class="font-display text-xl" data-i18n="cart-title">Votre Commande</h3>
       <p class="text-on-surface/40 text-xs font-label-caps tracking-widest mt-1">VIENDO GRILL</p>
     </div>
     <button onclick="closeCart()" class="w-10 h-10 flex items-center justify-center text-on-surface/60 hover:text-white transition-colors">
@@ -1450,9 +1452,9 @@ tailwind.config = {
   <!-- Empty state -->
   <div id="cartEmpty" class="flex-1 flex flex-col items-center justify-center gap-4 text-center px-8">
     <span class="material-symbols-outlined text-on-surface/20" style="font-size:56px;">shopping_basket</span>
-    <p class="text-on-surface/40 font-display italic">Votre panier est vide</p>
+    <p class="text-on-surface/40 font-display italic" data-i18n="cart-empty-txt">Votre panier est vide</p>
     <button onclick="closeCart(); document.getElementById('collection').scrollIntoView({behavior:'smooth'})"
-      class="text-secondary font-label-caps text-[11px] tracking-widest border-b border-secondary/40 pb-1 hover:border-secondary transition-colors mt-2">
+      class="text-secondary font-label-caps text-[11px] tracking-widest border-b border-secondary/40 pb-1 hover:border-secondary transition-colors mt-2" data-i18n="cart-voir">
       VOIR LE MENU
     </button>
   </div>
@@ -1461,22 +1463,22 @@ tailwind.config = {
   <div id="cartFooter" class="flex-shrink-0 px-8 py-6 border-t border-outline-variant/20 hidden">
     <!-- Upsell boissons -->
     <div class="flex items-center justify-between mb-5 px-4 py-3 border border-outline-variant/20 bg-surface-container">
-      <span class="text-on-surface/60 text-xs font-body">مخصكش مشروب؟</span>
+      <span class="text-on-surface/60 text-xs font-body" data-i18n="cart-upsell">مخصكش مشروب؟</span>
       <button onclick="closeCart(); switchTab('boissons'); document.getElementById('collection').scrollIntoView({behavior:'smooth'})"
-        class="text-secondary font-label-caps text-[10px] tracking-widest border-b border-secondary/50 pb-0.5 hover:border-secondary transition-colors">
+        class="text-secondary font-label-caps text-[10px] tracking-widest border-b border-secondary/50 pb-0.5 hover:border-secondary transition-colors" data-i18n="cart-upsell-btn">
         Ajouter
       </button>
     </div>
     <div class="flex justify-between items-center mb-6">
-      <span class="font-label-caps text-[11px] text-on-surface/60 tracking-widest">TOTAL</span>
+      <span class="font-label-caps text-[11px] text-on-surface/60 tracking-widest" data-i18n="cart-total">TOTAL</span>
       <span class="font-display text-2xl text-secondary" id="cartTotal">0 DA</span>
     </div>
     <button onclick="openCheckout()"
-      class="w-full bg-primary-container text-white py-4 font-label-caps text-[11px] tracking-[.3em] hover:bg-red-700 transition-all duration-300">
+      class="w-full bg-primary-container text-white py-4 font-label-caps text-[11px] tracking-[.3em] hover:bg-red-700 transition-all duration-300" data-i18n="cart-order">
       PASSER LA COMMANDE
     </button>
     <button onclick="closeCart()"
-      class="w-full mt-3 text-on-surface/30 hover:text-on-surface/60 transition-colors font-label-caps text-[10px] tracking-widest py-2">
+      class="w-full mt-3 text-on-surface/30 hover:text-on-surface/60 transition-colors font-label-caps text-[10px] tracking-widest py-2" data-i18n="cart-continue">
       Continuer les achats
     </button>
   </div>
@@ -1488,7 +1490,7 @@ tailwind.config = {
     <!-- Header -->
     <div class="flex items-center justify-between px-8 py-6 border-b border-outline-variant/20">
       <div>
-        <h3 class="font-display text-xl">Finaliser la Commande</h3>
+        <h3 class="font-display text-xl" data-i18n="checkout-title">Finaliser la Commande</h3>
         <p class="text-on-surface/40 text-xs font-label-caps tracking-widest mt-1">VIENDO GRILL</p>
       </div>
       <button onclick="closeCheckout()" class="w-10 h-10 flex items-center justify-center text-on-surface/60 hover:text-white transition-colors">
@@ -1511,12 +1513,12 @@ tailwind.config = {
       <p class="font-label-caps text-[10px] text-secondary tracking-widest mb-6">VOS INFORMATIONS</p>
       <div class="space-y-6">
         <div>
-          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2">NOM COMPLET *</label>
-          <input type="text" id="coName" placeholder="Votre nom" class="form-input" required/>
+          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2" data-i18n="co-lbl-name">NOM COMPLET *</label>
+          <input type="text" id="coName" placeholder="Votre nom" class="form-input" required data-i18n-ph="co-name-ph"/>
         </div>
         <div>
-          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2">TÉLÉPHONE *</label>
-          <input type="tel" id="coPhone" placeholder="+213 …" class="form-input" required/>
+          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2" data-i18n="co-lbl-phone">TÉLÉPHONE *</label>
+          <input type="tel" id="coPhone" placeholder="+213 …" class="form-input" required data-i18n-ph="co-phone-ph"/>
         </div>
         <div>
           <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2">مكان التوصيل</label>
@@ -1529,7 +1531,7 @@ tailwind.config = {
       </div>
       <button onclick="submitOrder()"
         class="w-full mt-8 bg-primary-container text-white py-4 font-label-caps text-[11px] tracking-[.3em] hover:bg-red-700 transition-all duration-300">
-        CONFIRMER LA COMMANDE
+        <span data-i18n="co-btn">CONFIRMER LA COMMANDE</span>
       </button>
     </div>
 
@@ -1538,10 +1540,10 @@ tailwind.config = {
       <div class="w-16 h-16 bg-primary-container/20 border border-primary-container/40 flex items-center justify-center mx-auto mb-6">
         <span class="material-symbols-outlined text-primary-container" style="font-size:32px;">check</span>
       </div>
-      <h4 class="font-display text-2xl mb-3">Commande Confirmée</h4>
-      <p class="text-on-surface/50 text-sm italic">Nous préparons votre commande. Merci de votre confiance.</p>
+      <h4 class="font-display text-2xl mb-3" data-i18n="co-success">Commande Confirmée</h4>
+      <p class="text-on-surface/50 text-sm italic" data-i18n="co-success-body">Nous préparons votre commande. Merci de votre confiance.</p>
       <button onclick="closeCheckout(); clearCart();"
-        class="mt-8 text-secondary font-label-caps text-[11px] tracking-widest border-b border-secondary/40 pb-1">
+        class="mt-8 text-secondary font-label-caps text-[11px] tracking-widest border-b border-secondary/40 pb-1" data-i18n="co-close">
         FERMER
       </button>
     </div>
@@ -1889,6 +1891,139 @@ ${items}
   document.getElementById('checkoutForm').classList.add('hidden');
   document.getElementById('checkoutSuccess').classList.remove('hidden');
   clearCart();
+}
+
+// ── LANGUAGE TOGGLE ────────────────────────────────
+let currentLang = 'fr';
+
+const i18n = {
+  fr: {
+    'cta-btn':'RÉSERVER','nav-reserver':'RÉSERVER','nav-carte':'La Carte','nav-foyer':'Le Foyer',
+    'nav-prive':'Privé','nav-exp':'EXPÉRIENCE','mnav-carte':'La Carte','mnav-foyer':'Le Foyer',
+    'mnav-prive':'Dîner Privé','mnav-reserver':'Réserver une Table',
+    'hero-tag':'Est. 2022 · Biskra','hero-sub':"L'Art Souverain de la Flamme Vive",
+    'hero-cmd':'COMMANDER MAINTENANT','hero-book':'BOOK AN EXPERIENCE - احجز طاولة','hero-scroll':'DÉFILER',
+    'stat-1':"JOURS D'AFFINAGE",'stat-2':'FAHRENHEIT DE SAISIE',
+    'stat-3':'RÉFÉRENCES DE CAVE','stat-4':'RECONNAISSANCE MICHELIN',
+    'tab-grillades':'GRILLADES','tab-chaudes':'ENTRÉES CHAUDES','tab-fumees':'VIANDES FUMÉES',
+    'tab-froide':'ENTRÉE FROIDE','tab-poissons':'POISSONS','tab-boissons':'BOISSONS',
+    'philo-lbl':'LA PHILOSOPHIE','philo-explore':'EXPLORER LA CARTE',
+    'chef-lbl':'LE CHEF','private-lbl':'EXPÉRIENCES EXCLUSIVES','private-contact':'NOUS CONTACTER',
+    'res-lbl':'CONCIERGERIE DIGITALE','res-title':'Demander une Table',
+    'res-sub':'Un membre de notre équipe confirmera dans les 2 heures.',
+    'lbl-prenom':'PRÉNOM','ph-prenom':'Votre prénom','lbl-nom':'NOM','ph-nom':'Votre nom',
+    'lbl-email':'E-MAIL','lbl-tel':'TÉLÉPHONE','lbl-date':'DATE','lbl-heure':'HEURE',
+    'lbl-convives':'CONVIVES','lbl-occasion':'OCCASION','lbl-requests':'DEMANDES PARTICULIÈRES',
+    'ph-requests':'Régimes alimentaires, préférences ou notes…',
+    'opt-1conv':'1 Convive','opt-7plus':'7+ — Dîner Privé','opt-none':'Aucune occasion particulière',
+    'opt-birthday':'Anniversaire','opt-anniversary':'Célébration',
+    'opt-business':"Dîner d'affaires",'opt-proposal':'Demande en mariage','opt-other':'Autre',
+    'btn-reserve':'DEMANDER UNE RÉSERVATION','res-success-title':'Demande Reçue',
+    'res-success-body':'Merci. Votre demande de table a bien été reçue. Notre concierge confirmera votre réservation dans les 2 heures par e-mail.',
+    'res-success-tag':'NOUS ATTENDONS VOTRE ARRIVÉE AVEC PLAISIR',
+    'footer-adresse':'ADRESSE','footer-horaires':'HORAIRES','footer-decouvrir':'DÉCOUVRIR','footer-contact':'CONTACT',
+    'footer-carte':'La Carte','footer-prive':'Dîner Privé','footer-presse':'Dossier Presse','footer-cadeaux':'Cartes Cadeaux',
+    'day-jeu':'Jeu','day-ven':'Ven','day-sam':'Sam','day-dim':'Dim','day-lun':'Lun','day-mar':'Mar','day-mer':'Mer',
+    'footer-copy':'© 2022 VIENDO GRILL. BISKRA, ALGÉRIE. TOUS DROITS RÉSERVÉS.',
+    'footer-privacy':'Politique de Confidentialité','footer-cond':'Conditions','footer-career':'Carrières',
+    'cart-title':'Votre Commande','cart-empty-txt':'Votre panier est vide','cart-voir':'VOIR LE MENU',
+    'cart-total':'TOTAL','cart-order':'PASSER LA COMMANDE','cart-continue':'Continuer les achats',
+    'cart-upsell':'مخصكش مشروب؟','cart-upsell-btn':'Ajouter',
+    'checkout-title':'Finaliser la Commande','co-lbl-name':'NOM COMPLET *','co-lbl-phone':'TÉLÉPHONE *',
+    'co-name-ph':'Votre nom','co-phone-ph':'+213 …','co-btn':'CONFIRMER LA COMMANDE',
+    'co-success':'Commande Confirmée','co-success-body':'Nous préparons votre commande. Merci de votre confiance.',
+    'co-close':'FERMER',
+  },
+  ar: {
+    'cta-btn':'احجز','nav-reserver':'احجز','nav-carte':'القائمة','nav-foyer':'الموقد',
+    'nav-prive':'خاص','nav-exp':'تجربة','mnav-carte':'القائمة','mnav-foyer':'الموقد',
+    'mnav-prive':'عشاء خاص','mnav-reserver':'احجز طاولة',
+    'hero-tag':'تأسس 2022 · بسكرة','hero-sub':'فن اللهب الحي',
+    'hero-cmd':'اطلب الآن','hero-book':'احجز طاولتك','hero-scroll':'تمرير',
+    'stat-1':'يوم نضوج','stat-2':'فهرنهايت للشواء',
+    'stat-3':'مرجع مشروب','stat-4':'تكريم ميشلان',
+    'tab-grillades':'مشويات','tab-chaudes':'مقبلات ساخنة','tab-fumees':'لحوم مدخنة',
+    'tab-froide':'مقبلات باردة','tab-poissons':'أسماك','tab-boissons':'مشروبات',
+    'philo-lbl':'الفلسفة','philo-explore':'استكشف القائمة',
+    'chef-lbl':'الشيف','private-lbl':'تجارب حصرية','private-contact':'تواصل معنا',
+    'res-lbl':'الحجوزات','res-title':'احجز طاولة',
+    'res-sub':'سيتواصل معك فريقنا خلال ساعتين.',
+    'lbl-prenom':'الاسم الأول','ph-prenom':'اسمك الأول','lbl-nom':'اللقب','ph-nom':'لقبك',
+    'lbl-email':'البريد الإلكتروني','lbl-tel':'الهاتف','lbl-date':'التاريخ','lbl-heure':'الوقت',
+    'lbl-convives':'عدد الأشخاص','lbl-occasion':'المناسبة','lbl-requests':'طلبات خاصة',
+    'ph-requests':'نظام غذائي، تفضيلات أو ملاحظات…',
+    'opt-1conv':'1 شخص','opt-7plus':'7+ — عشاء خاص','opt-none':'بدون مناسبة',
+    'opt-birthday':'عيد ميلاد','opt-anniversary':'احتفال',
+    'opt-business':'عشاء عمل','opt-proposal':'خطوبة','opt-other':'أخرى',
+    'btn-reserve':'إرسال طلب الحجز','res-success-title':'تم استلام الطلب',
+    'res-success-body':'شكراً. تم استلام طلب حجزك. سيتواصل معك طاقمنا خلال ساعتين.',
+    'res-success-tag':'نتطلع إلى استقبالكم',
+    'footer-adresse':'العنوان','footer-horaires':'أوقات العمل','footer-decouvrir':'اكتشف','footer-contact':'تواصل',
+    'footer-carte':'القائمة','footer-prive':'عشاء خاص','footer-presse':'الصحافة','footer-cadeaux':'بطاقات الهدايا',
+    'day-jeu':'خ','day-ven':'ج','day-sam':'س','day-dim':'ح','day-lun':'إ','day-mar':'ث','day-mer':'أ',
+    'footer-copy':'© 2022 VIENDO GRILL. بسكرة، الجزائر. جميع الحقوق محفوظة.',
+    'footer-privacy':'سياسة الخصوصية','footer-cond':'الشروط','footer-career':'التوظيف',
+    'cart-title':'طلبك','cart-empty-txt':'سلتك فارغة','cart-voir':'عرض القائمة',
+    'cart-total':'المجموع','cart-order':'تأكيد الطلب','cart-continue':'متابعة التسوق',
+    'cart-upsell':'مخصكش مشروب؟','cart-upsell-btn':'إضافة',
+    'checkout-title':'تأكيد الطلب','co-lbl-name':'الاسم الكامل *','co-lbl-phone':'الهاتف *',
+    'co-name-ph':'اسمك الكامل','co-phone-ph':'0XXXXXXXXX','co-btn':'تأكيد الطلب',
+    'co-success':'تم إرسال طلبك!','co-success-body':'سنتواصل معك في أقرب وقت.',
+    'co-close':'إغلاق',
+  }
+};
+
+function t(key){ return (i18n[currentLang] && i18n[currentLang][key]) || (i18n.fr[key]) || key; }
+
+function toggleLang() {
+  currentLang = currentLang === 'fr' ? 'ar' : 'fr';
+  const isAr = currentLang === 'ar';
+
+  // RTL / LTR
+  document.documentElement.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+  document.documentElement.setAttribute('lang', isAr ? 'ar' : 'fr');
+
+  // Toggle button labels
+  document.querySelectorAll('.lang-btn').forEach(b => { b.textContent = isAr ? 'FR' : 'AR'; });
+
+  // Update all data-i18n text nodes
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+  });
+
+  // Update placeholder attributes
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    el.placeholder = t(el.dataset.i18nPh);
+  });
+
+  // Update select options
+  document.querySelectorAll('[data-i18n-opt]').forEach(el => {
+    el.textContent = t(el.dataset.i18nOpt);
+  });
+
+  // Hero title (has inner HTML with span)
+  const heroTitle = document.getElementById('heroTitle');
+  if (heroTitle) {
+    heroTitle.innerHTML = isAr
+      ? 'حين يلتقي النار <br/><span class="gold-shimmer">بالكمال</span>'
+      : 'Quand le Feu Rencontre <br/><span class="gold-shimmer">la Perfection</span>';
+  }
+
+  // Philosophy title (has inner HTML)
+  const philoTitle = document.getElementById('philoTitle');
+  if (philoTitle) {
+    philoTitle.innerHTML = isAr
+      ? 'إتقان <br/>النار الحية'
+      : 'La Maîtrise <br/>du Feu Vif';
+  }
+
+  // Private dining title (has inner HTML)
+  const privateTitle = document.getElementById('privateTitle');
+  if (privateTitle) {
+    privateTitle.innerHTML = isAr
+      ? 'الصالات <br/>الخاصة'
+      : 'Les Salons <br/>Privés';
+  }
 }
 
 // Init cart UI
