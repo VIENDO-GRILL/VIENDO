@@ -1795,6 +1795,14 @@ function formatPrice(n) {
   return n.toLocaleString('fr-DZ') + ' DA';
 }
 
+function formatTotal() {
+  const hasOnDemand = cart.some(i => i.price == null);
+  const numericTotal = getTotal();
+  if(!hasOnDemand) return formatPrice(numericTotal);
+  if(numericTotal === 0) return 'Sur demande';
+  return formatPrice(numericTotal) + ' + Sur demande';
+}
+
 function updateCartUI() {
   const total = getTotal();
   const count = cart.reduce((s, i) => s + i.qty, 0);
@@ -1820,7 +1828,7 @@ function updateCartUI() {
   }
 
   // Total display
-  document.getElementById('cartTotal').textContent = formatPrice(total);
+  document.getElementById('cartTotal').textContent = formatTotal();
 
   // Items vs empty state
   const itemsEl = document.getElementById('cartItems');
@@ -1875,7 +1883,7 @@ function openCheckout() {
       <span class="text-secondary font-display">${item.price != null ? formatPrice(item.price * item.qty) : 'Sur demande'}</span>
     </div>
   `).join('');
-  document.getElementById('checkoutTotal').textContent = formatPrice(getTotal());
+  document.getElementById('checkoutTotal').textContent = formatTotal();
   document.getElementById('checkoutForm').classList.remove('hidden');
   document.getElementById('checkoutSuccess').classList.add('hidden');
   document.getElementById('checkoutModal').classList.add('open');
