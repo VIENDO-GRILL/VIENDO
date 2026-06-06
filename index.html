@@ -1548,25 +1548,37 @@ tailwind.config = {
       <p class="font-label-caps text-[10px] text-secondary tracking-widest mb-6">VOS INFORMATIONS</p>
       <div class="space-y-6">
         <div>
-          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2" data-i18n="co-lbl-name">NOM COMPLET *</label>
-          <input type="text" id="coName" placeholder="Votre nom" class="form-input" required data-i18n-ph="co-name-ph"/>
+          <label class="flex justify-between items-baseline mb-2">
+            <span class="font-label-caps text-[10px] text-on-surface/50 tracking-widest">NOM COMPLET *</span>
+            <span class="text-[10px] text-on-surface/35" style="font-family:'Courier New',monospace">الاسم الكامل</span>
+          </label>
+          <input type="text" id="coName" placeholder="Votre nom — اسمك الكامل" class="form-input" required/>
         </div>
         <div>
-          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2" data-i18n="co-lbl-phone">TÉLÉPHONE *</label>
-          <input type="tel" id="coPhone" placeholder="+213 …" class="form-input" required data-i18n-ph="co-phone-ph"/>
+          <label class="flex justify-between items-baseline mb-2">
+            <span class="font-label-caps text-[10px] text-on-surface/50 tracking-widest">TÉLÉPHONE *</span>
+            <span class="text-[10px] text-on-surface/35" style="font-family:'Courier New',monospace">رقم الهاتف</span>
+          </label>
+          <input type="tel" id="coPhone" placeholder="+213 …" class="form-input" required/>
         </div>
         <div>
-          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2">مكان التوصيل</label>
-          <input type="text" id="coAddress" placeholder="العنوان، الحي، رقم المبنى…" class="form-input" dir="rtl"/>
+          <label class="flex justify-between items-baseline mb-2">
+            <span class="font-label-caps text-[10px] text-on-surface/50 tracking-widest">ADRESSE</span>
+            <span class="text-[10px] text-on-surface/35" style="font-family:'Courier New',monospace">مكان التوصيل</span>
+          </label>
+          <input type="text" id="coAddress" placeholder="Quartier, bâtiment — الحي، رقم المبنى" class="form-input"/>
         </div>
         <div>
-          <label class="font-label-caps text-[10px] text-on-surface/50 tracking-widest block mb-2">ملاحظة</label>
-          <input type="text" id="coNotes" placeholder="ملاحظة…" class="form-input" dir="rtl"/>
+          <label class="flex justify-between items-baseline mb-2">
+            <span class="font-label-caps text-[10px] text-on-surface/50 tracking-widest">NOTE</span>
+            <span class="text-[10px] text-on-surface/35" style="font-family:'Courier New',monospace">ملاحظة</span>
+          </label>
+          <input type="text" id="coNotes" placeholder="Remarques — ملاحظات خاصة" class="form-input"/>
         </div>
       </div>
       <button onclick="submitOrder()"
         class="w-full mt-8 bg-primary-container text-white py-4 font-label-caps text-[11px] tracking-[.3em] hover:bg-red-700 transition-all duration-300">
-        <span data-i18n="co-btn">CONFIRMER LA COMMANDE</span>
+        <span>CONFIRMER — <span style="font-family:'Courier New',monospace;letter-spacing:.1em">تأكيد الطلب</span></span>
       </button>
     </div>
 
