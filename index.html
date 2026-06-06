@@ -453,16 +453,19 @@ tailwind.config = {
     <p class="text-xl md:text-2xl font-display text-on-surface/70 italic mb-14 opacity-0 animate-[fadeIn_2s_ease-out_2.4s_forwards]" data-i18n="hero-sub">
       L'Art Souverain de la Flamme Vive
     </p>
-    <div class="flex flex-col md:flex-row gap-6 opacity-0 animate-[fadeIn_2s_ease-out_2.8s_forwards]">
-      <button onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})"
-        class="group relative bg-primary-container text-white px-14 py-5 font-label-caps text-label-caps overflow-hidden">
-        <span class="relative z-10" data-i18n="hero-cmd">COMMANDER MAINTENANT</span>
-        <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-      </button>
-      <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})"
-        class="group border border-secondary/40 text-secondary px-14 py-5 font-label-caps text-label-caps hover:bg-secondary hover:text-on-secondary transition-all" data-i18n="hero-book">
-        BOOK AN EXPERIENCE - احجز طاولة
-      </button>
+    <div class="flex flex-col items-center gap-6 opacity-0 animate-[fadeIn_2s_ease-out_2.8s_forwards]">
+      <div class="flex flex-col md:flex-row gap-6">
+        <button onclick="document.getElementById('collection').scrollIntoView({behavior:'smooth'})"
+          class="group relative bg-primary-container text-white px-14 py-5 font-label-caps text-label-caps overflow-hidden">
+          <span class="relative z-10" data-i18n="hero-cmd">COMMANDER MAINTENANT</span>
+          <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+        </button>
+        <button onclick="document.getElementById('reservation').scrollIntoView({behavior:'smooth'})"
+          class="group border border-secondary/40 text-secondary px-14 py-5 font-label-caps text-label-caps hover:bg-secondary hover:text-on-secondary transition-all" data-i18n="hero-book">
+          BOOK AN EXPERIENCE - احجز طاولة
+        </button>
+      </div>
+      <button onclick="toggleLang()" class="lang-btn text-secondary font-label-caps text-[10px] tracking-[.3em] border border-secondary/30 px-6 py-2 hover:bg-secondary/10 transition-colors">AR / FR</button>
     </div>
   </div>
   <!-- Scroll indicator -->
