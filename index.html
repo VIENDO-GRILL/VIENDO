@@ -1908,11 +1908,23 @@ function closeCheckout() {
 
 async function sendToTelegram(text) {
   try {
-    await fetch('/send-telegram', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text })
-    });
+    const isStatic = location.hostname.includes('github.io') ||
+                     (!location.hostname.includes('localhost') &&
+                      !location.hostname.includes('replit') &&
+                      !location.hostname.includes('127.0.0.1'));
+    if (isStatic) {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: 'HTML' })
+      });
+    } else {
+      await fetch('/send-telegram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+    }
   } catch(e) { console.warn('Telegram error:', e); }
 }
 
