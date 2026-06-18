@@ -1,0 +1,57 @@
+name: Deploy VIENDO GRILL
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install flask requests
+
+      - name: Validate server.py syntax
+        run: python -m py_compile server.py && echo "✅ server.py OK"
+
+      # ─────────────────────────────────────────────────────────────
+      # SSH Deploy — أضف هذه الـ Secrets في GitHub:
+      #   SSH_HOST     → عنوان IP السيرفر
+      #   SSH_USER     → اسم المستخدم (مثل: root أو ubuntu)
+      #   SSH_KEY      → مفتاح SSH الخاص (Private Key)
+      #   DEPLOY_PATH  → مسار المجلد على السيرفر (مثل: /var/www/viendo)
+      # ─────────────────────────────────────────────────────────────
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            git pull origin main
+            pip install flask requests --quiet
+            pkill -f "python server.py" || true
+            nohup python server.py > server.log 2>&1 &
+            echo "✅ Deployed successfully"
+
+      - name: Notify Telegram
+        if: always()
+        run: |
+          STATUS="${{ job.status }}"
+          if [ "$STATUS" = "success" ]; then
+            MSG="✅ <b>VIENDO GRILL</b> — تم النشر بنجاح 🚀%0ACommit: ${{ github.event.head_commit.message }}"
+          else
+            MSG="❌ <b>VIENDO GRILL</b> — فشل النشر%0ACommit: ${{ github.event.head_commit.message }}"
+          fi
+          curl -s "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}&text=${MSG}&parse_mode=HTML"
